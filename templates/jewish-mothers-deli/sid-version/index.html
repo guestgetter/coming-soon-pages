@@ -96,18 +96,20 @@
 
         .founder-section {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 1rem;
             margin-top: 2rem;
+            text-align: center;
         }
 
         .founder-photo {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(111, 62, 19, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(111, 62, 19, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .story-text {
@@ -342,12 +344,6 @@
             
             .signature {
                 font-size: 1.3rem;
-            }
-            
-            .founder-section {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.75rem;
             }
         }
     </style>
