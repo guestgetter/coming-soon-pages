@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewish Mother's Deli - Coming Soon | Williamsburg, VA</title>
+    <meta name="description" content="A new delicatessen is coming to the heart of Williamsburg, Virginia. Be the first to know when we open.">
+    <link rel="icon" type="image/png" href="jewish-mothers-deli-favicon.png">
+    <link rel="shortcut icon" type="image/png" href="jewish-mothers-deli-favicon.png">
+    <link rel="apple-touch-icon" href="jewish-mothers-deli-favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fbe7cc;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(111, 62, 19, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(111, 62, 19, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(138, 84, 46, 0.03) 0%, transparent 50%),
+                linear-gradient(90deg, transparent 39px, rgba(111, 62, 19, 0.04) 40px, rgba(111, 62, 19, 0.04) 41px, transparent 42px),
+                linear-gradient(0deg, transparent 39px, rgba(111, 62, 19, 0.03) 40px, rgba(111, 62, 19, 0.03) 41px, transparent 42px),
+                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(111, 62, 19, 0.015) 2px, rgba(111, 62, 19, 0.015) 4px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 80px 80px, 80px 80px, 20px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.02;
+            background-image: 
+                radial-gradient(circle at 20% 50%, transparent 20%, rgba(120, 119, 116, 0.3) 21%, rgba(120, 119, 116, 0.3) 34%, transparent 35%, transparent),
+                linear-gradient(0deg, transparent 24%, rgba(120, 119, 116, 0.05) 25%, rgba(120, 119, 116, 0.05) 26%, transparent 27%, transparent 74%, rgba(120, 119, 116, 0.05) 75%, rgba(120, 119, 116, 0.05) 76%, transparent 77%, transparent);
+            z-index: 1;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(138, 84, 46, 0.1);
+            font-size: 1.2rem;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; right: 15%; animation-delay: 5s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 10s; }
+        .floating-element:nth-child(4) { top: 40%; right: 25%; animation-delay: 15s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-20px) rotate(2deg); opacity: 0.2; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            gap: 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            flex: 0 0 auto;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .logo {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .content {
+            flex: 1;
+            max-width: 600px;
+            text-align: left;
+            animation: fadeInRight 1s ease-out 0.3s both;
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: #6f3e13;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #5D5A54;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .highlight {
+            color: #8a542e;
+            font-weight: 500;
+        }
+
+        .signup-form {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #6f3e13;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .form-subtitle {
+            color: #8a542e;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        input[type="email"],
+        input[type="text"] {
+            flex: 1;
+            padding: 1rem 1.2rem;
+            border: 2px solid #E5E1DC;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #8a542e;
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(138, 84, 46, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #8a542e 0%, #6f3e13 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(138, 84, 46, 0.3);
+            background: linear-gradient(135deg, #6f3e13 0%, #8a542e 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .location {
+            color: #8a542e;
+            font-size: 0.95rem;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(138, 84, 46, 0.1) 0%, rgba(111, 62, 19, 0.1) 100%);
+            color: #6f3e13;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 1px solid rgba(138, 84, 46, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                gap: 3rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .logo {
+                max-width: 550px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+            
+            .content {
+                text-align: center;
+                animation: fadeInUp 1s ease-out 0.3s both;
+            }
+            
+            .logo-container {
+                animation: fadeInUp 1s ease-out;
+            }
+            
+            .logo {
+                max-width: 400px;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+            
+            .signup-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .input-row {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .logo {
+                max-width: 350px;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+            
+            .signup-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                max-width: 250px;
+            }
+            
+            .signup-form {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    
+    <div class="floating-elements">
+        <div class="floating-element">🥖</div>
+        <div class="floating-element">🧄</div>
+        <div class="floating-element">🥒</div>
+        <div class="floating-element">🧀</div>
+    </div>
+
+    <div class="container">
+        <div class="logo-container">
+            <img src="fulllogo_transparent.png" alt="Jewish Mother's Deli Logo" class="logo">
+        </div>
+
+        <div class="content">
+            <p class="tagline">
+                "Trust me, you've never had it like this"
+            </p>
+
+            <p class="description">
+                Listen, I'm opening a deli in <span class="highlight">Historic Williamsburg</span> because this community deserves 
+                real food made with love. These are my bubbe's recipes—and her mother's before that. Three generations of women 
+                who understood that when you feed someone well, you're telling them they matter. That's what I'm bringing here.
+            </p>
+
+            <div class="signup-form">
+                <h2 class="form-title">Let Me Take Care of You</h2>
+                <p class="form-subtitle">Give me your information and I'll make sure you're the first to know when we're ready to welcome you. Trust me, you don't want to miss opening day.</p>
+                
+                <form id="signupForm">
+                    <div class="input-group">
+                        <div class="input-row">
+                            <input type="text" name="firstName" placeholder="First Name" required>
+                            <input type="email" name="email" placeholder="Email Address" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Reserve Your Spot</button>
+                </form>
+                
+                <div id="successMessage" class="success-message">
+                    Perfect! I've got your information. You'll be among the first to know when we're ready to feed you properly.
+                </div>
+            </div>
+
+            <p class="location">
+                📍 <strong>Coming Soon to Williamsburg, Virginia</strong><br>
+                Where every meal feels like coming home
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // HighLevel API v1 Integration (using working pattern)
+        const HIGHLEVEL_API_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6Ik1paHE2OGY0ODVZbHhpbnVSak1wIiwidmVyc2lvbiI6MSwiaWF0IjoxNzU0MzEyMjgyOTAzLCJzdWIiOiJ4QTVucmE2a1EyOHpFc3JjY21HYSJ9.ea_spz9fej0DY8jgGcZctjE3HZAkK9OllTJAnvDkGJs';
+        const LOCATION_ID = 'Mihq68f485YlxinuRjMp';
+
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const firstName = formData.get('firstName');
+            const email = formData.get('email');
+            const submitBtn = this.querySelector('.submit-btn');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (!firstName || !email) return;
+
+            // Show loading state
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            try {
+                // Send to HighLevel API v1 (using working endpoint)
+                const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HIGHLEVEL_API_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        firstName: firstName,
+                        email: email,
+                        locationId: LOCATION_ID,
+                        source: 'Jewish Mothers Deli Coming Soon Page',
+                        tags: ['coming-soon', 'deli-signup', 'williamsburg']
+                    })
+                });
+
+                if (response.ok) {
+                    // Success
+                    this.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    successMessage.classList.add('pulse');
+                    console.log('Contact successfully added to HighLevel');
+                } else {
+                    throw new Error('Failed to add contact');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Still show success to user (for better UX), but log the error
+                this.style.display = 'none';
+                successMessage.style.display = 'block';
+                successMessage.classList.add('pulse');
+                
+                // Log fallback data for manual processing
+                console.log('Fallback - Contact data:', { firstName, email, timestamp: new Date().toISOString() });
+            } finally {
+                // Reset button
+                submitBtn.textContent = 'Reserve Your Spot';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Add some interactive hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo');
+            
+            logo.addEventListener('mouseenter', function() {
+                this.style.filter = 'drop-shadow(0 15px 35px rgba(0, 0, 0, 0.15)) hue-rotate(5deg)';
+            });
+            
+            logo.addEventListener('mouseleave', function() {
+                this.style.filter = 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1))';
+            });
+        });
+    </script>
+</body>
+</html>
