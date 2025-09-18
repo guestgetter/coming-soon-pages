@@ -489,6 +489,9 @@
 
     <script>
         // Client-only: call our serverless API which talks to HighLevel v2 securely
+        let SAVED_EMAIL = null;
+        let SAVED_FIRSTNAME = null;
+
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -525,6 +528,9 @@
                     this.style.display = 'none';
                     enrichForm.style.display = 'block';
                     console.log('Basic contact saved. Showing enrichment.');
+                    // cache identifiers for upsert in step 2
+                    SAVED_EMAIL = email;
+                    SAVED_FIRSTNAME = firstName;
                 } else {
                     throw new Error('Failed to add contact');
                 }
@@ -545,7 +551,8 @@
         document.getElementById('enrichForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const phone = formData.get('phone');
+            const rawPhone = (formData.get('phone') || '').replace(/[^\d+]/g, '');
+            const phone = rawPhone || undefined;
             const birthdayRaw = (formData.get('birthday') || '').trim();
             // Normalize MM/DD to YYYY-MM-DD using current year for now (HighLevel accepts date)
             let birthday = undefined;
@@ -569,7 +576,14 @@
                 const response = await fetch('/api/highlevel', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, birthday, favoriteItem })
+                    body: JSON.stringify({
+                        // include identifiers to ensure update attaches to the same contact
+                        email: SAVED_EMAIL,
+                        firstName: SAVED_FIRSTNAME,
+                        phone,
+                        birthday,
+                        favoriteItem
+                    })
                 });
                 let respJson = null;
                 try { respJson = await response.json(); } catch (e) { /* ignore */ }
