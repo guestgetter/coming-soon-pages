@@ -517,6 +517,9 @@
                     })
                 });
 
+                let respJson = null;
+                try { respJson = await response.json(); } catch (e) { /* ignore */ }
+                console.log('HL v2 create/upsert response:', response.status, respJson);
                 if (response.ok) {
                     // Step 2: show enrichment form instead of final success
                     this.style.display = 'none';
@@ -568,6 +571,9 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone, birthday, favoriteItem })
                 });
+                let respJson = null;
+                try { respJson = await response.json(); } catch (e) { /* ignore */ }
+                console.log('HL v2 enrichment response:', response.status, respJson);
 
                 // Show final success regardless; we want a delightful UX
                 this.style.display = 'none';
