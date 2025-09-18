@@ -234,6 +234,59 @@
             transform: translateY(-2px);
         }
 
+        /* Enrichment step styles */
+        .enrich-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #6f3e13;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .enrich-subtitle {
+            color: #5D5A54;
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+        }
+
+        .field-label {
+            color: #6f3e13;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.9rem 2rem;
+            margin: 0.75rem 0 1.25rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #5D5A54;
+            font-size: 0.98rem;
+        }
+
+        .btn-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .link-btn {
+            background: transparent;
+            border: none;
+            color: #8a542e;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.95rem;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -390,21 +443,37 @@
                 </form>
 
                 <form id="enrichForm" style="display:none; margin-top:1rem;">
-                    <p class="form-subtitle" style="margin-top:-0.5rem;">Mind sharing a couple extras? It helps us treat you right.</p>
+                    <h3 class="enrich-title">Thanks for Joining Our Deli Family!</h3>
+                    <p class="enrich-subtitle">Help us make your experience even better by sharing a bit more about yourself. This is optional, but we'd love to know!</p>
+
                     <div class="input-group">
+                        <div class="field-label">Phone Number</div>
                         <div class="input-row">
-                            <input type="text" name="phone" placeholder="Phone (optional)">
-                            <input type="date" name="birthday" placeholder="Birthday (optional)">
+                            <input type="text" name="phone" placeholder="(555) 123-4567">
                         </div>
+                        <div class="field-label" style="margin-top:0.5rem;">Birthday (Month & Day)</div>
                         <div class="input-row">
-                            <input type="text" name="favoriteItem" placeholder="Your favorite Jewish deli item (optional)">
+                            <input type="text" name="birthday" placeholder="MM/DD">
+                        </div>
+                        <div class="field-label" style="margin-top:0.5rem;">What are your favorite deli foods? (Check all that apply)</div>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Pastrami"> Pastrami</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Bagels & Lox"> Bagels & Lox</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Matzo Ball Soup"> Matzo Ball Soup</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Corned Beef"> Corned Beef</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Reuben Sandwich"> Reuben Sandwich</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Knish"> Knish</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Pickles"> Pickles</label>
+                            <label class="checkbox-item"><input type="checkbox" name="favorites" value="Brisket"> Brisket</label>
                         </div>
                     </div>
-                    <div style="display:flex; gap:0.75rem;">
-                        <button type="submit" class="submit-btn">Save Preferences</button>
-                        <button type="button" id="skipEnrich" class="secondary-btn">Skip for now</button>
+                    <div class="btn-row">
+                        <button type="button" id="backToStep1" class="secondary-btn">← Back</button>
+                        <button type="button" id="skipEnrich" class="link-btn">Skip this step</button>
+                        <div style="flex:1"></div>
+                        <button type="submit" class="submit-btn">Complete</button>
                     </div>
-                    <p class="muted" style="margin-top:0.75rem;">We’ll never share your info. Ever.</p>
+                    <p class="muted" style="margin-top:0.75rem;">Your information is secure and will only be used to enhance your deli experience. We never share your data with third parties.</p>
                 </form>
                 
                 <div id="successMessage" class="success-message">
@@ -474,8 +543,19 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             const phone = formData.get('phone');
-            const birthday = formData.get('birthday');
-            const favoriteItem = formData.get('favoriteItem');
+            const birthdayRaw = (formData.get('birthday') || '').trim();
+            // Normalize MM/DD to YYYY-MM-DD using current year for now (HighLevel accepts date)
+            let birthday = undefined;
+            if (birthdayRaw && /^(\d{1,2})\/(\d{1,2})$/.test(birthdayRaw)) {
+                const [, mm, dd] = birthdayRaw.match(/^(\d{1,2})\/(\d{1,2})$/);
+                const year = new Date().getFullYear();
+                const mmPadded = String(mm).padStart(2, '0');
+                const ddPadded = String(dd).padStart(2, '0');
+                birthday = `${year}-${mmPadded}-${ddPadded}`;
+            }
+            // Build a friendly favorites list for the custom field (comma-separated)
+            const favorites = Array.from(document.querySelectorAll('input[name="favorites"]:checked')).map(cb => cb.value);
+            const favoriteItem = favorites.length ? favorites.join(', ') : undefined;
             const btn = this.querySelector('.submit-btn');
             const successMessage = document.getElementById('successMessage');
 
@@ -514,6 +594,12 @@
             const successMessage = document.getElementById('successMessage');
             successMessage.style.display = 'block';
             successMessage.classList.add('pulse');
+        });
+
+        // Back to step 1
+        document.getElementById('backToStep1').addEventListener('click', function() {
+            document.getElementById('enrichForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
         });
 
         // Add some interactive hover effects
