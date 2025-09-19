@@ -7,7 +7,7 @@
 
 function normalizePhone(input) {
     if (!input) return undefined;
-    const raw = String(input).trim();
+    const raw = String(input).trim().replace(/\s|-/g, '');
     const digits = raw.replace(/[^\d]/g, '');
     if (!digits) return undefined;
     // US/Canada default: add +1 for 10 digits
@@ -15,17 +15,6 @@ function normalizePhone(input) {
     if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`;
     if (/^\+\d{7,15}$/.test(raw)) return raw;
     return `+${digits}`;
-}
-
-function formatPhoneForHL(e164) {
-    if (!e164) return undefined;
-    // Convert +15551234567 -> +1 555-123-4567 to match docs example
-    const m = e164.match(/^\+(\d)(\d{3})(\d{3})(\d{4})$/);
-    if (m) {
-        const [, c, a, b, c4] = m;
-        return `+${c} ${a}-${b}-${c4}`;
-    }
-    return e164;
 }
 
 export default async function handler(req, res) {
@@ -65,7 +54,7 @@ export default async function handler(req, res) {
         }
 
         const normalizedPhone = normalizePhone(phone);
-        const hlPhone = formatPhoneForHL(normalizedPhone) || phone || undefined;
+        const hlPhone = normalizedPhone || phone || undefined;
         const payload = {
             firstName: firstName || undefined,
             email: email || undefined,

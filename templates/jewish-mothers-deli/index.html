@@ -449,11 +449,11 @@
                     <div class="input-group">
                         <div class="field-label">Phone Number</div>
                         <div class="input-row">
-                            <input type="text" name="phone" placeholder="(555) 123-4567">
+                            <input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="(555) 123-4567">
                         </div>
-                        <div class="field-label" style="margin-top:0.5rem;">Birthday (Month & Day)</div>
+                        <div class="field-label" style="margin-top:0.5rem;">Birthday</div>
                         <div class="input-row">
-                            <input type="text" name="birthday" placeholder="MM/DD">
+                            <input type="date" name="birthday" autocomplete="bday">
                         </div>
                         <div class="field-label" style="margin-top:0.5rem;">What are your favorite deli foods? (Check all that apply)</div>
                         <div class="checkbox-grid">
@@ -551,31 +551,25 @@
         document.getElementById('enrichForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
-            // Normalize phone to E.164 assuming US/Canada if 10 digits
+            // Normalize phone to strict E.164 assuming US/Canada if 10 digits
             const inputPhoneRaw = (formData.get('phone') || '').toString();
             const phoneDigits = inputPhoneRaw.replace(/[^\d]/g, '');
             let phone = undefined;
             if (phoneDigits) {
                 if (phoneDigits.length === 10) {
-                    phone = `+1 ${phoneDigits.slice(0,3)}-${phoneDigits.slice(3,6)}-${phoneDigits.slice(6)}`;
+                    phone = `+1${phoneDigits}`;
                 } else if (phoneDigits.length === 11 && phoneDigits.startsWith('1')) {
-                    phone = `+1 ${phoneDigits.slice(1,4)}-${phoneDigits.slice(4,7)}-${phoneDigits.slice(7)}`;
-                } else if (/^\+\d{7,15}$/.test(inputPhoneRaw.trim())) {
-                    phone = inputPhoneRaw.trim();
+                    phone = `+${phoneDigits}`;
+                } else if (/^\+\d{7,15}$/.test(inputPhoneRaw.trim().replace(/\s|-/g, ''))) {
+                    phone = inputPhoneRaw.trim().replace(/\s|-/g, '');
                 } else {
                     phone = `+${phoneDigits}`;
                 }
             }
             const birthdayRaw = (formData.get('birthday') || '').trim();
-            // Normalize MM/DD to YYYY-MM-DD using current year for now (HighLevel accepts date)
+            // Input type=date already returns YYYY-MM-DD
             let birthday = undefined;
-            if (birthdayRaw && /^(\d{1,2})\/(\d{1,2})$/.test(birthdayRaw)) {
-                const [, mm, dd] = birthdayRaw.match(/^(\d{1,2})\/(\d{1,2})$/);
-                const year = new Date().getFullYear();
-                const mmPadded = String(mm).padStart(2, '0');
-                const ddPadded = String(dd).padStart(2, '0');
-                birthday = `${year}-${mmPadded}-${ddPadded}`;
-            }
+            if (birthdayRaw) birthday = birthdayRaw;
             // Build a friendly favorites list for the custom field (comma-separated)
             const favorites = Array.from(document.querySelectorAll('input[name="favorites"]:checked')).map(cb => cb.value);
             const favoriteItem = favorites.length ? favorites.join(', ') : undefined;
