@@ -155,7 +155,9 @@ export default async function handler(req, res) {
                 const updatePayload = {
                     // Only send fields we care about (per docs, PUT is supported)
                     phone: normalizedPhone || undefined,
-                    dateOfBirth: birthday || undefined
+                    dateOfBirth: birthday || undefined,
+                    locationId: locationId,
+                    firstName: firstName || undefined
                 };
                 const putUrl = `${urlBase}/contacts/${contactId}`;
                 const putResp = await fetch(putUrl, {
