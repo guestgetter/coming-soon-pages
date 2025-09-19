@@ -160,14 +160,14 @@ export default async function handler(req, res) {
                     dateOfBirth: birthday || undefined,
                     firstName: firstName || undefined
                 };
-                const patchUrl = `${urlBase}/contacts/${contactId}`;
-                const patchResp = await fetch(patchUrl, {
-                    method: 'PATCH',
+                const putUrl = `${urlBase}/contacts/${contactId}`;
+                const putResp = await fetch(putUrl, {
+                    method: 'PUT',
                     headers,
                     body: JSON.stringify(updatePayload)
                 });
-                const patchText = await patchResp.text();
-                try { updateResult = patchText ? JSON.parse(patchText) : {}; } catch (_) { updateResult = { raw: patchText }; }
+                const putText = await putResp.text();
+                try { updateResult = putText ? JSON.parse(putText) : {}; } catch (_) { updateResult = { raw: putText }; }
             } catch (e) {
                 updateResult = { error: String(e && e.message || e) };
             }
