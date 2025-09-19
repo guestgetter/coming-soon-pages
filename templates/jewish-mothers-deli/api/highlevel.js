@@ -160,27 +160,28 @@ export default async function handler(req, res) {
                     dateOfBirth: birthday || undefined,
                     firstName: firstName || undefined
                 };
-                const putUrl = `${urlBase}/contacts/${contactId}`;
-                const putResp = await fetch(putUrl, {
-                    method: 'PUT',
+                const patchUrl = `${urlBase}/contacts/${contactId}`;
+                const patchResp = await fetch(patchUrl, {
+                    method: 'PATCH',
                     headers,
                     body: JSON.stringify(updatePayload)
                 });
-                const putText = await putResp.text();
-                try { updateResult = putText ? JSON.parse(putText) : {}; } catch (_) { updateResult = { raw: putText }; }
+                const patchText = await patchResp.text();
+                try { updateResult = patchText ? JSON.parse(patchText) : {}; } catch (_) { updateResult = { raw: patchText }; }
             } catch (e) {
                 updateResult = { error: String(e && e.message || e) };
             }
         }
 
-        // Verification: fetch the contact back to confirm fields saved
+        // Verification: fetch the contact back by ID to confirm fields saved
         let verifiedContact = null;
-        if (email) {
+        if (contactId) {
             try {
-                const lookupUrl = `${urlBase}/contacts/lookup?email=${encodeURIComponent(email)}`;
-                const lookup = await fetch(lookupUrl, { headers });
-                if (lookup.ok) {
-                    verifiedContact = await lookup.json();
+                const getUrl = `${urlBase}/contacts/${contactId}`;
+                const getResp = await fetch(getUrl, { headers });
+                if (getResp.ok) {
+                    const getText = await getResp.text();
+                    try { verifiedContact = getText ? JSON.parse(getText) : {}; } catch (_) { verifiedContact = { raw: getText }; }
                 }
             } catch (_) {}
         }
