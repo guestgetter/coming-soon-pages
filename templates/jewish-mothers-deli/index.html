@@ -557,9 +557,9 @@
             let phone = undefined;
             if (phoneDigits) {
                 if (phoneDigits.length === 10) {
-                    phone = `+1${phoneDigits}`;
+                    phone = `+1 ${phoneDigits.slice(0,3)}-${phoneDigits.slice(3,6)}-${phoneDigits.slice(6)}`;
                 } else if (phoneDigits.length === 11 && phoneDigits.startsWith('1')) {
-                    phone = `+${phoneDigits}`;
+                    phone = `+1 ${phoneDigits.slice(1,4)}-${phoneDigits.slice(4,7)}-${phoneDigits.slice(7)}`;
                 } else if (/^\+\d{7,15}$/.test(inputPhoneRaw.trim())) {
                     phone = inputPhoneRaw.trim();
                 } else {

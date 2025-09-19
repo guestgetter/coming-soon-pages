@@ -17,6 +17,17 @@ function normalizePhone(input) {
     return `+${digits}`;
 }
 
+function formatPhoneForHL(e164) {
+    if (!e164) return undefined;
+    // Convert +15551234567 -> +1 555-123-4567 to match docs example
+    const m = e164.match(/^\+(\d)(\d{3})(\d{3})(\d{4})$/);
+    if (m) {
+        const [, c, a, b, c4] = m;
+        return `+${c} ${a}-${b}-${c4}`;
+    }
+    return e164;
+}
+
 export default async function handler(req, res) {
     if (req.method === 'OPTIONS') {
         // CORS preflight (same-origin on Vercel typically OK, but keep permissive within site)
@@ -54,11 +65,13 @@ export default async function handler(req, res) {
         }
 
         const normalizedPhone = normalizePhone(phone);
+        const hlPhone = formatPhoneForHL(normalizedPhone) || phone || undefined;
         const payload = {
             firstName: firstName || undefined,
             email: email || undefined,
-            phone: normalizedPhone || undefined,
+            phone: hlPhone || undefined,
             locationId: locationId,
+            country: 'US',
             source: source || 'Jewish Mothers Deli Coming Soon Page',
             tags: Array.isArray(tags) && tags.length ? tags : ['coming-soon', 'deli-signup', 'williamsburg']
         };
@@ -150,11 +163,11 @@ export default async function handler(req, res) {
         }
 
         let updateResult = null;
-        if (contactId && (normalizedPhone || birthday)) {
+        if (contactId && (hlPhone || birthday)) {
             try {
                 const updatePayload = {
                     // Only send fields we care about (per docs, PUT is supported)
-                    phone: normalizedPhone || undefined,
+                    phone: hlPhone || undefined,
                     dateOfBirth: birthday || undefined,
                     locationId: locationId,
                     firstName: firstName || undefined
