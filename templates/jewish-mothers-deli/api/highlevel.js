@@ -58,6 +58,7 @@ export default async function handler(req, res) {
             firstName: firstName || undefined,
             email: email || undefined,
             phone: normalizedPhone || undefined,
+            phoneNumbers: normalizedPhone ? [{ phone: normalizedPhone, label: 'primary' }] : undefined,
             locationId: locationId,
             source: source || 'Jewish Mothers Deli Coming Soon Page',
             tags: Array.isArray(tags) && tags.length ? tags : ['coming-soon', 'deli-signup', 'williamsburg']
@@ -130,16 +131,30 @@ export default async function handler(req, res) {
                 email: payload.email,
                 firstName: payload.firstName,
                 phone: payload.phone,
+                phoneNumbers: payload.phoneNumbers,
                 dateOfBirth: payload.dateOfBirth,
                 locationId: payload.locationId,
                 tags: payload.tags
             }});
         }
 
-        return res.status(200).json({ ok: true, data: json, debugSent: {
+        // Optional verification: fetch the contact back to confirm fields saved
+        let verifiedContact = null;
+        if (email) {
+            try {
+                const lookupUrl = `${urlBase}/contacts/lookup?email=${encodeURIComponent(email)}`;
+                const lookup = await fetch(lookupUrl, { headers });
+                if (lookup.ok) {
+                    verifiedContact = await lookup.json();
+                }
+            } catch (_) {}
+        }
+
+        return res.status(200).json({ ok: true, data: json, verifiedContact, debugSent: {
             email: payload.email,
             firstName: payload.firstName,
             phone: payload.phone,
+            phoneNumbers: payload.phoneNumbers,
             dateOfBirth: payload.dateOfBirth,
             locationId: payload.locationId,
             tags: payload.tags
