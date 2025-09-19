@@ -158,7 +158,6 @@ export default async function handler(req, res) {
                     // Only send fields we care about (per docs, PUT is supported)
                     phone: hlPhone || undefined,
                     dateOfBirth: birthday || undefined,
-                    locationId: locationId,
                     firstName: firstName || undefined
                 };
                 const putUrl = `${urlBase}/contacts/${contactId}`;
