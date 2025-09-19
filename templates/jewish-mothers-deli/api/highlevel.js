@@ -64,9 +64,7 @@ export default async function handler(req, res) {
         };
 
         if (birthday) {
-            // v2 commonly accepts `birthday` in YYYY-MM-DD; if schema differs, API will ignore/validate
-            payload.birthday = birthday;
-            // Some schemas expect `dateOfBirth`
+            // Use dateOfBirth only (YYYY-MM-DD)
             payload.dateOfBirth = birthday;
         }
 
@@ -90,37 +88,33 @@ export default async function handler(req, res) {
             'Accept': 'application/json'
         };
 
-        let response = await fetch(createUrl, {
+        // Prefer upsert first to ensure updates merge to same contact
+        const upsertUrl = `${urlBase}/contacts/upsert`;
+        let response = await fetch(upsertUrl, {
             method: 'POST',
             headers,
             body: JSON.stringify(payload)
         });
-
-        // If creation fails due to existing contact, try upsert or lookup + patch
         if (!response.ok) {
-            // Try upsert endpoint if available
-            const upsertUrl = `${urlBase}/contacts/upsert`; // documented in some v2 references
-            let alt = await fetch(upsertUrl, {
+            // Fallback to create, then lookup+patch
+            let alt = await fetch(createUrl, {
                 method: 'POST',
                 headers,
                 body: JSON.stringify(payload)
             });
-            if (!alt.ok) {
-                // As a final attempt, do lookup by email then PATCH
-                if (email) {
-                    const lookupUrl = `${urlBase}/contacts/lookup?email=${encodeURIComponent(email)}`;
-                    const lookup = await fetch(lookupUrl, { headers });
-                    if (lookup.ok) {
-                        const data = await lookup.json();
-                        const contactId = data?.contact?.id || data?.contacts?.[0]?.id;
-                        if (contactId) {
-                            const patchUrl = `${urlBase}/contacts/${contactId}`;
-                            alt = await fetch(patchUrl, {
-                                method: 'PATCH',
-                                headers,
-                                body: JSON.stringify(payload)
-                            });
-                        }
+            if (!alt.ok && email) {
+                const lookupUrl = `${urlBase}/contacts/lookup?email=${encodeURIComponent(email)}`;
+                const lookup = await fetch(lookupUrl, { headers });
+                if (lookup.ok) {
+                    const data = await lookup.json();
+                    const contactId = data?.contact?.id || data?.contacts?.[0]?.id;
+                    if (contactId) {
+                        const patchUrl = `${urlBase}/contacts/${contactId}`;
+                        alt = await fetch(patchUrl, {
+                            method: 'PATCH',
+                            headers,
+                            body: JSON.stringify(payload)
+                        });
                     }
                 }
             }
