@@ -155,7 +155,9 @@
         }
 
         input[type="email"],
-        input[type="text"] {
+        input[type="text"],
+        input[type="tel"],
+        input[type="date"] {
             flex: 1;
             padding: 1rem 1.2rem;
             border: 2px solid #E5E1DC;
@@ -167,7 +169,9 @@
         }
 
         input[type="email"]:focus,
-        input[type="text"]:focus {
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus {
             outline: none;
             border-color: #8a542e;
             background: rgba(255, 255, 255, 0.95);
@@ -453,7 +457,7 @@
                         </div>
                         <div class="field-label" style="margin-top:0.5rem;">Birthday</div>
                         <div class="input-row">
-                            <input type="date" name="birthday" autocomplete="bday">
+                            <input type="date" name="birthday" autocomplete="bday" id="birthdayField">
                         </div>
                         <div class="field-label" style="margin-top:0.5rem;">What are your favorite deli foods? (Check all that apply)</div>
                         <div class="checkbox-grid">
@@ -554,6 +558,16 @@
             // Normalize phone to strict E.164 assuming US/Canada if 10 digits
             const inputPhoneRaw = (formData.get('phone') || '').toString();
             const phoneDigits = inputPhoneRaw.replace(/[^\d]/g, '');
+            // Live formatting on input for readability
+            const phoneInputEl = e.target.querySelector('input[name="phone"]') || document.querySelector('#enrichForm input[name="phone"]');
+            if (phoneInputEl) {
+                phoneInputEl.addEventListener('input', function() {
+                    const d = this.value.replace(/[^\d]/g, '');
+                    if (d.length <= 3) this.value = d;
+                    else if (d.length <= 6) this.value = `(${d.slice(0,3)}) ${d.slice(3)}`;
+                    else this.value = `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6,10)}`;
+                }, { once: true });
+            }
             let phone = undefined;
             if (phoneDigits) {
                 if (phoneDigits.length === 10) {
@@ -657,6 +671,16 @@
         // Add some interactive hover effects
         document.addEventListener('DOMContentLoaded', function() {
             const logo = document.querySelector('.logo');
+            const birthdayField = document.getElementById('birthdayField');
+            if (birthdayField) {
+                // Auto-open on focus or click for easier UX
+                birthdayField.addEventListener('focus', function() {
+                    if (this.showPicker) this.showPicker();
+                });
+                birthdayField.addEventListener('click', function() {
+                    if (this.showPicker) this.showPicker();
+                });
+            }
             
             logo.addEventListener('mouseenter', function() {
                 this.style.filter = 'drop-shadow(0 15px 35px rgba(0, 0, 0, 0.15)) hue-rotate(5deg)';
