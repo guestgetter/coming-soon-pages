@@ -5,6 +5,18 @@
 // - GHL_LOCATION_ID: HighLevel Location ID to attribute the contact
 // - GHL_FAVORITE_FIELD_ID (optional): Custom field ID for "Favorite Jewish Deli Item"
 
+function normalizePhone(input) {
+    if (!input) return undefined;
+    const raw = String(input).trim();
+    const digits = raw.replace(/[^\d]/g, '');
+    if (!digits) return undefined;
+    // US/Canada default: add +1 for 10 digits
+    if (digits.length === 10) return `+1${digits}`;
+    if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`;
+    if (/^\+\d{7,15}$/.test(raw)) return raw;
+    return `+${digits}`;
+}
+
 export default async function handler(req, res) {
     if (req.method === 'OPTIONS') {
         // CORS preflight (same-origin on Vercel typically OK, but keep permissive within site)
@@ -41,10 +53,11 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Email or phone required' });
         }
 
+        const normalizedPhone = normalizePhone(phone);
         const payload = {
             firstName: firstName || undefined,
             email: email || undefined,
-            phone: phone || undefined,
+            phone: normalizedPhone || undefined,
             locationId: locationId,
             source: source || 'Jewish Mothers Deli Coming Soon Page',
             tags: Array.isArray(tags) && tags.length ? tags : ['coming-soon', 'deli-signup', 'williamsburg']
@@ -53,6 +66,8 @@ export default async function handler(req, res) {
         if (birthday) {
             // v2 commonly accepts `birthday` in YYYY-MM-DD; if schema differs, API will ignore/validate
             payload.birthday = birthday;
+            // Some schemas expect `dateOfBirth`
+            payload.dateOfBirth = birthday;
         }
 
         const customFields = [];
@@ -125,5 +140,6 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Server error', details: String(err && err.message || err) });
     }
 }
+
 
 

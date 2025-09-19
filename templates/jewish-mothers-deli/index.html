@@ -551,8 +551,21 @@
         document.getElementById('enrichForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const rawPhone = (formData.get('phone') || '').replace(/[^\d+]/g, '');
-            const phone = rawPhone || undefined;
+            // Normalize phone to E.164 assuming US/Canada if 10 digits
+            const inputPhoneRaw = (formData.get('phone') || '').toString();
+            const phoneDigits = inputPhoneRaw.replace(/[^\d]/g, '');
+            let phone = undefined;
+            if (phoneDigits) {
+                if (phoneDigits.length === 10) {
+                    phone = `+1${phoneDigits}`;
+                } else if (phoneDigits.length === 11 && phoneDigits.startsWith('1')) {
+                    phone = `+${phoneDigits}`;
+                } else if (/^\+\d{7,15}$/.test(inputPhoneRaw.trim())) {
+                    phone = inputPhoneRaw.trim();
+                } else {
+                    phone = `+${phoneDigits}`;
+                }
+            }
             const birthdayRaw = (formData.get('birthday') || '').trim();
             // Normalize MM/DD to YYYY-MM-DD using current year for now (HighLevel accepts date)
             let birthday = undefined;
