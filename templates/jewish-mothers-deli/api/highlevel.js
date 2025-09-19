@@ -126,10 +126,24 @@ export default async function handler(req, res) {
         try { json = text ? JSON.parse(text) : {}; } catch (_) { json = { raw: text }; }
 
         if (!response.ok) {
-            return res.status(response.status).json({ error: 'HighLevel API error', details: json });
+            return res.status(response.status).json({ error: 'HighLevel API error', details: json, debugSent: {
+                email: payload.email,
+                firstName: payload.firstName,
+                phone: payload.phone,
+                dateOfBirth: payload.dateOfBirth,
+                locationId: payload.locationId,
+                tags: payload.tags
+            }});
         }
 
-        return res.status(200).json({ ok: true, data: json });
+        return res.status(200).json({ ok: true, data: json, debugSent: {
+            email: payload.email,
+            firstName: payload.firstName,
+            phone: payload.phone,
+            dateOfBirth: payload.dateOfBirth,
+            locationId: payload.locationId,
+            tags: payload.tags
+        }});
     } catch (err) {
         return res.status(500).json({ error: 'Server error', details: String(err && err.message || err) });
     }
