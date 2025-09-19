@@ -136,7 +136,41 @@ export default async function handler(req, res) {
             }});
         }
 
-        // Optional verification: fetch the contact back to confirm fields saved
+        // Ensure phone/dateOfBirth persist: lookup id then PUT update (per docs)
+        let contactId = json?.contact?.id || json?.id || json?.contacts?.[0]?.id || null;
+        if (!contactId && email) {
+            try {
+                const lookupUrl = `${urlBase}/contacts/lookup?email=${encodeURIComponent(email)}`;
+                const lookup = await fetch(lookupUrl, { headers });
+                if (lookup.ok) {
+                    const looked = await lookup.json();
+                    contactId = looked?.contact?.id || looked?.contacts?.[0]?.id || null;
+                }
+            } catch (_) {}
+        }
+
+        let updateResult = null;
+        if (contactId && (normalizedPhone || birthday)) {
+            try {
+                const updatePayload = {
+                    // Only send fields we care about (per docs, PUT is supported)
+                    phone: normalizedPhone || undefined,
+                    dateOfBirth: birthday || undefined
+                };
+                const putUrl = `${urlBase}/contacts/${contactId}`;
+                const putResp = await fetch(putUrl, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify(updatePayload)
+                });
+                const putText = await putResp.text();
+                try { updateResult = putText ? JSON.parse(putText) : {}; } catch (_) { updateResult = { raw: putText }; }
+            } catch (e) {
+                updateResult = { error: String(e && e.message || e) };
+            }
+        }
+
+        // Verification: fetch the contact back to confirm fields saved
         let verifiedContact = null;
         if (email) {
             try {
@@ -148,7 +182,7 @@ export default async function handler(req, res) {
             } catch (_) {}
         }
 
-        return res.status(200).json({ ok: true, data: json, verifiedContact, debugSent: {
+        return res.status(200).json({ ok: true, data: json, updateResult, verifiedContact, debugSent: {
             email: payload.email,
             firstName: payload.firstName,
             phone: payload.phone,
