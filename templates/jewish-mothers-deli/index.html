@@ -606,6 +606,20 @@
                 this.style.display = 'none';
                 successMessage.style.display = 'block';
                 successMessage.classList.add('pulse');
+                // Temporary debug surface to stop guessing (auto-hides in 10s)
+                if (respJson) {
+                    const pre = document.createElement('pre');
+                    pre.style.marginTop = '10px';
+                    pre.style.background = '#fff';
+                    pre.style.border = '1px solid #eee';
+                    pre.style.padding = '8px';
+                    pre.style.borderRadius = '8px';
+                    pre.style.maxHeight = '200px';
+                    pre.style.overflow = 'auto';
+                    pre.textContent = `Status: ${response.status}\n` + JSON.stringify(respJson, null, 2);
+                    successMessage.appendChild(pre);
+                    setTimeout(() => { pre.remove(); }, 10000);
+                }
 
                 if (!response.ok) {
                     console.log('Enrichment save returned non-200');
@@ -615,6 +629,17 @@
                 this.style.display = 'none';
                 successMessage.style.display = 'block';
                 successMessage.classList.add('pulse');
+                const pre = document.createElement('pre');
+                pre.style.marginTop = '10px';
+                pre.style.background = '#fff';
+                pre.style.border = '1px solid #eee';
+                pre.style.padding = '8px';
+                pre.style.borderRadius = '8px';
+                pre.style.maxHeight = '200px';
+                pre.style.overflow = 'auto';
+                pre.textContent = 'Network error during enrichment';
+                successMessage.appendChild(pre);
+                setTimeout(() => { pre.remove(); }, 10000);
             } finally {
                 btn.textContent = 'Save Preferences';
                 btn.disabled = false;
