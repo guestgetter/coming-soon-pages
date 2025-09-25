@@ -236,6 +236,45 @@
             border: 1px solid rgba(138, 84, 46, 0.2);
         }
 
+        .social-follow {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .social-follow .label {
+            font-weight: 600;
+            color: #6f3e13;
+            margin-right: 0.25rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid rgba(138, 84, 46, 0.25);
+            color: #6f3e13;
+            text-decoration: none;
+            transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 6px 18px rgba(138, 84, 46, 0.18);
+        }
+
+        .social-icon {
+            width: 18px;
+            height: 18px;
+        }
+
         .secondary-btn {
             background: transparent;
             color: #6f3e13;
@@ -634,6 +673,24 @@
                 this.style.display = 'none';
                 successMessage.style.display = 'block';
                 successMessage.classList.add('pulse');
+                // Add social follow block
+                const follow = document.createElement('div');
+                follow.className = 'social-follow';
+                follow.innerHTML = `
+                    <span class="label">Follow along:</span>
+                    <a class="social-link" href="https://www.instagram.com/thejewishmothersdeli/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
+                        <svg class="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="12" cy="12" r="3.8" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a class="social-link" href="https://www.facebook.com/thejewishmothersdeli" target="_blank" rel="noopener noreferrer" aria-label="Follow on Facebook">
+                        <svg class="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H8.08v-2.9h2.36V9.79c0-2.33 1.37-3.62 3.47-3.62.99 0 2.03.18 2.03.18v2.24h-1.14c-1.12 0-1.47.7-1.47 1.41v1.7h2.5l-.4 2.9h-2.1V22c4.78-.76 8.44-4.92 8.44-9.94z" fill="currentColor"/>
+                        </svg>
+                    </a>`;
+                successMessage.appendChild(follow);
 
                 if (!response.ok) {
                     console.log('Enrichment save returned non-200');
