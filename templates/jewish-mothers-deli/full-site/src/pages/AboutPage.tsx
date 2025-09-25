@@ -321,7 +321,7 @@ const AboutPage: React.FC = () => {
               {/* Timeline Line */}
               <Box
                 position="absolute"
-                left={{ base: '50%', lg: '50%' }}
+                left={{ base: '10%', lg: '50%' }}
                 top={0}
                 bottom={0}
                 w="4px"
@@ -337,7 +337,7 @@ const AboutPage: React.FC = () => {
                     {/* Timeline Dot */}
                     <Box
                       position="absolute"
-                      left="50%"
+                      left={{ base: '10%', lg: '50%' }}
                       top="50%"
                       w="24px"
                       h="24px"
@@ -362,7 +362,7 @@ const AboutPage: React.FC = () => {
                       <Box
                         flex="1"
                         maxW={{ base: '100%', lg: '360px' }}
-                        textAlign={{ base: 'center', lg: 'right' }}
+                        textAlign={{ base: 'left', lg: 'right' }}
                         order={{ base: 1, lg: 1 }}
                         pr={{ base: 0, lg: 12 }}
                         mt={{ base: 4, lg: 0 }}
@@ -394,19 +394,14 @@ const AboutPage: React.FC = () => {
 
                       {/* Center Spacer for Mobile */}
                       <Box 
-                        display={{ base: 'block', lg: 'none' }}
-                        w="100px"
-                        h="2px"
-                        bg="brand.mediumBrown"
-                        opacity={0.3}
-                        borderRadius="1px"
+                        display={{ base: 'none', lg: 'none' }}
                       />
 
                       {/* Right Content - Description and Image */}
                       <Box
                         flex="1"
                         maxW={{ base: '100%', lg: '440px' }}
-                        textAlign={{ base: 'center', lg: 'left' }}
+                        textAlign={{ base: 'left', lg: 'left' }}
                         order={{ base: 3, lg: 2 }}
                         pl={{ base: 0, lg: 12 }}
                         mt={{ base: 4, lg: 0 }}
