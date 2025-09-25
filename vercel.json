@@ -1,7 +1,7 @@
 {
-  "builds": [
-    { "src": "full-site/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
-  ],
+  "installCommand": "cd full-site && npm ci",
+  "buildCommand": "cd full-site && npm run build",
+  "outputDirectory": "full-site/dist",
   "routes": [
     { "src": "/(.*)", "dest": "/index.html" }
   ]
