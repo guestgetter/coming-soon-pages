@@ -1,8 +1,8 @@
 {
   "builds": [
-    { "src": "full-site/package.json", "use": "@vercel/static-build", "config": { "distDir": "full-site/build" } }
+    { "src": "full-site/package.json", "use": "@vercel/static-build", "config": { "distDir": "build" } }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "full-site/build/$1" }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
