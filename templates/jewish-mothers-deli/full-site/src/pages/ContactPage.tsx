@@ -119,14 +119,13 @@ const ContactPage: React.FC = () => {
                   </Text>
                 </VStack>
 
-                {/* Glassmorphic Form Box */}
+                {/* Form Card - brand beige background with white fields */}
                 <Box
-                  bg="rgba(255, 255, 255, 0.7)"
-                  backdropFilter="blur(10px)"
+                  bg="brand.cream"
                   borderRadius="24px"
                   p={{ base: 6, md: 8 }}
                   boxShadow="0 20px 40px rgba(0, 0, 0, 0.1)"
-                  border="1px solid rgba(255, 255, 255, 0.2)"
+                  border="1px solid rgba(138, 84, 46, 0.15)"
                 >
                   <form onSubmit={handleSubmit}>
                     <VStack spacing={6}>
@@ -146,7 +145,7 @@ const ContactPage: React.FC = () => {
                           onChange={handleInputChange}
                           placeholder="Your full name"
                           size="lg"
-                          bg="brand.cream"
+                          bg="white"
                           border="2px solid"
                           borderColor="brand.lightGray"
                           borderRadius="16px"
@@ -182,7 +181,7 @@ const ContactPage: React.FC = () => {
                           onChange={handleInputChange}
                           placeholder="your.email@example.com"
                           size="lg"
-                          bg="brand.cream"
+                          bg="white"
                           border="2px solid"
                           borderColor="brand.lightGray"
                           borderRadius="16px"
@@ -217,7 +216,7 @@ const ContactPage: React.FC = () => {
                           onChange={handleInputChange}
                           placeholder="Tell us what's on your mind..."
                           size="lg"
-                          bg="brand.cream"
+                          bg="white"
                           border="2px solid"
                           borderColor="brand.lightGray"
                           borderRadius="16px"
