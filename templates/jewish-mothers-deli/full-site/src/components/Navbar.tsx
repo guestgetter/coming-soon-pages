@@ -112,14 +112,13 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
       baseScale = 0.8;
     }
     
-    // Mobile logo sizing - only affected by shrinkLogo, not by sticky state
+    // Mobile logo sizing
     if (isMobile) {
+      maxHeight = '160px'; // reduce to avoid cramped look
       if (shrinkLogo) {
-        maxHeight = '120px'; // Larger when in cuisine section for better visibility
+        maxHeight = '120px';
         baseScale = 0.8;
       }
-      // When not in cuisine section, use the same size as desktop (220px default)
-      // This ensures mobile logo returns to original size after cuisine section
     }
     
     return (
@@ -132,10 +131,10 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
           width: 'auto',
           cursor: 'pointer',
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          filter: isScrolled ? 'brightness(0.8)' : 'brightness(1)',
+          filter: isScrolled ? 'brightness(0.9)' : 'brightness(1)',
           objectFit: "contain",
           background: "transparent",
-          willChange: 'transform, filter, opacity', // Optimize for animations
+          willChange: 'transform, filter, opacity',
           transform: hideLogo ? `scale(${baseScale * 0.8}) translateZ(0)` : `scale(${baseScale}) translateZ(0)`,
           opacity: hideLogo ? 0 : 1,
           visibility: hideLogo ? 'hidden' : 'visible',
@@ -144,14 +143,14 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
           if (!hideLogo) {
             const target = e.target as HTMLImageElement;
             target.style.transform = `scale(${baseScale * 1.05}) translateZ(0)`;
-            target.style.filter = 'brightness(1.1)';
+            target.style.filter = 'brightness(1.05)';
           }
         }}
         onMouseLeave={(e) => {
           if (!hideLogo) {
             const target = e.target as HTMLImageElement;
             target.style.transform = `scale(${baseScale}) translateZ(0)`;
-            target.style.filter = isScrolled ? 'brightness(0.8)' : 'brightness(1)';
+            target.style.filter = isScrolled ? 'brightness(0.9)' : 'brightness(1)';
           }
         }}
       />
@@ -160,17 +159,17 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
 
   return (
          <Box
-       data-navbar
-       position="fixed"
-       top={0}
-       left={0}
-       right={0}
-       zIndex={1500}
-       transition="all 0.3s ease"
-       bg="transparent"
-       willChange="transform"
-       transform="translateZ(0)"
-     >
+      data-navbar
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      zIndex={1500}
+      transition="all 0.3s ease"
+      bg="transparent"
+      willChange="transform"
+      transform="translateZ(0)"
+    >
       {/* Top yellow accent strip */}
       <Box
         h="4px"
@@ -178,7 +177,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         w="100%"
       />
 
-      {/* White background overlay - responsive height when scrolling */}
+      {/* Sticky background - use brand beige */}
       {isScrolled && !isOpen && (
         <Box
           position="absolute"
@@ -186,7 +185,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
           left={0}
           right={0}
           h={{ base: shrinkLogo ? "75%" : "135%", md: "40%" }}
-          bg="rgba(255, 255, 255, 0.75)"
+          bg="rgba(251, 231, 204, 0.95)"
           backdropFilter="blur(8px)"
           borderBottom="1px solid rgba(138, 84, 46, 0.15)"
           boxShadow="0 2px 10px rgba(0, 0, 0, 0.08)"
@@ -201,13 +200,13 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         maxW="1400px"
         mx="auto"
         position="relative"
-        minH={{ base: '80px', md: '180px', lg: '240px' }}
+        minH={{ base: '130px', md: '180px', lg: '240px' }}
         zIndex={2}
       >
         {/* Mobile Layout */}
         {isMobile && (
           <>
-            {/* White background overlay when menu is open - prevents beige color */}
+            {/* White background overlay when menu is open */}
             {isOpen && (
               <Box
                 position="absolute"
@@ -235,7 +234,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               />
             )}
             
-            {/* Hamburger Menu - positioned at the very top, transforms to X when opening */}
+            {/* Hamburger Menu */}
             <Box position="absolute" top={isOpen ? "56px" : (shrinkLogo ? "2.5" : "56px")} left={4} zIndex={10003} transform={isOpen ? "translateY(-50%)" : (shrinkLogo ? "none" : "translateY(-50%)")} transition="all 0.3s ease">
               <IconButton
                 aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -264,7 +263,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               />
             </Box>
 
-            {/* Mobile Logo - positioned based on page, hidden when menu is open or in cuisine section */}
+            {/* Mobile Logo */}
             {!isOpen && !shrinkLogo && (
               <Box 
                 position="absolute" 
@@ -285,7 +284,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         {/* Desktop Navigation Layout */}
         {!isMobile && (
           <Flex align="center" justify="space-between" position="relative" zIndex={3}>
-            {/* Left Navigation Links - positioned very close to logo */}
+            {/* Left Navigation Links */}
             <HStack spacing={4} justify="flex-end" flex={1} pr={{ base: 16, md: 24, lg: 36 }}>
               {navItems.slice(0, 2).map((item) => (
                 <Link key={item.name} to={item.path} onClick={() => handleNavigation(item.path)}>
@@ -318,21 +317,21 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               ))}
             </HStack>
 
-            {/* Logo Background Container - shrinks when shrinkLogo is true */}
+            {/* Logo Background Container */}
             <Box
               position="absolute"
               left="50%"
               top={isOpen ? "85%" : (shrinkLogo ? "0%" : "85%")}
               transform="translate(-50%, -50%)"
               zIndex={4}
-              bg={isScrolled ? 'rgba(255, 255, 255, 0.75)' : 'transparent'}
+              bg={isScrolled ? 'rgba(251, 231, 204, 0.95)' : 'transparent'}
               borderRadius="50%"
               w={isOpen ? "135px" : (shrinkLogo ? "70px" : "135px")}
               h={isOpen ? "135px" : (shrinkLogo ? "60px" : "135px")}
               transition="all 0.3s ease"
             />
             
-            {/* Centered Logo - extends below navbar line - shrinks when shrinkLogo is true */}
+            {/* Centered Logo */}
             <Box
               position="absolute"
               left="50%"
@@ -346,7 +345,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               </Link>
             </Box>
 
-            {/* Right Navigation Links - positioned very close to logo */}
+            {/* Right Navigation Links */}
             <HStack spacing={4} justify="flex-start" flex={1} pl={{ base: 16, md: 24, lg: 36 }}>
               {navItems.slice(2).map((item) => (
                 <Link key={item.name} to={item.path} onClick={() => handleNavigation(item.path)}>
@@ -383,7 +382,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
 
       </Box>
 
-      {/* Mobile Navigation - Outside main navbar container for proper z-index */}
+      {/* Mobile Navigation */}
       {isMobile && (
         <Collapse in={isOpen} animateOpacity>
           <Box
@@ -398,7 +397,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
             zIndex={9999}
             minH="100vh"
           >
-            {/* Comfortable spacing from top - adjusted for mobile menu position */}
+            {/* Comfortable spacing from top */}
             <VStack spacing={6} pt={shrinkLogo ? "20px" : "20px"} align="center" justify="flex-start" minH="100vh">
               {navItems.map((item) => (
                 <Box key={item.name}>
