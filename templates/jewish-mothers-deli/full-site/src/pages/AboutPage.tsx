@@ -333,12 +333,12 @@ const AboutPage: React.FC = () => {
 
               <VStack spacing={0} align="stretch">
                 {timelineEvents.map((event, index) => (
-                  <Box key={index} position="relative" py={12}>
+                  <Box key={index} position="relative" py={{ base: 12, lg: 16 }}>
                     {/* Timeline Dot */}
                     <Box
                       position="absolute"
                       left="50%"
-                      top={{ base: "65%", lg: "60%" }}
+                      top="50%"
                       w="24px"
                       h="24px"
                       bg="brand.mediumBrown"
@@ -361,9 +361,11 @@ const AboutPage: React.FC = () => {
                       {/* Left Content - Year and Title */}
                       <Box
                         flex="1"
-                        maxW={{ base: '100%', lg: '300px' }}
+                        maxW={{ base: '100%', lg: '360px' }}
                         textAlign={{ base: 'center', lg: 'right' }}
                         order={{ base: 1, lg: 1 }}
+                        pr={{ base: 0, lg: 12 }}
+                        mt={{ base: 4, lg: 0 }}
                       >
                         <VStack spacing={3} align={{ base: 'center', lg: 'flex-end' }}>
                           <Text
@@ -383,7 +385,7 @@ const AboutPage: React.FC = () => {
                             color="brand.cream"
                             fontWeight={600}
                             lineHeight={1.2}
-                            maxW="280px"
+                            maxW="320px"
                           >
                             {event.title}
                           </Text>
@@ -403,9 +405,11 @@ const AboutPage: React.FC = () => {
                       {/* Right Content - Description and Image */}
                       <Box
                         flex="1"
-                        maxW={{ base: '100%', lg: '400px' }}
+                        maxW={{ base: '100%', lg: '440px' }}
                         textAlign={{ base: 'center', lg: 'left' }}
                         order={{ base: 3, lg: 2 }}
+                        pl={{ base: 0, lg: 12 }}
+                        mt={{ base: 4, lg: 0 }}
                       >
                         <VStack spacing={4} align={{ base: 'center', lg: 'flex-start' }}>
                           <Text
@@ -413,16 +417,15 @@ const AboutPage: React.FC = () => {
                             color="brand.cream"
                             lineHeight={1.6}
                             fontWeight={300}
-                            maxW="350px"
-                            pl={{ base: 0, lg: 16 }}
+                            maxW="380px"
                           >
                             {event.description}
                           </Text>
 
                           {/* Image */}
                           <Box
-                            w={{ base: '180px', lg: '220px' }}
-                            h={{ base: '120px', lg: '150px' }}
+                            w={{ base: '200px', lg: '240px' }}
+                            h={{ base: '130px', lg: '160px' }}
                             borderRadius="16px"
                             overflow="hidden"
                             boxShadow="0 15px 35px rgba(0, 0, 0, 0.15)"

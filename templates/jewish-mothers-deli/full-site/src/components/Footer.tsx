@@ -10,6 +10,7 @@ import {
   useBreakpointValue,
   Divider,
 } from '@chakra-ui/react'
+import { Link as RouterLink } from 'react-router-dom'
 
 const Footer: React.FC = () => {
   const direction = useBreakpointValue({ base: 'column', lg: 'row' }) as 'column' | 'row'
@@ -30,7 +31,7 @@ const Footer: React.FC = () => {
       items: [
         { label: 'Our Menu', href: '/menu', isExternal: false, icon: undefined },
         { label: 'About Us', href: '/about', isExternal: false, icon: undefined },
-        { label: 'Reservations', href: '/reservations', isExternal: false, icon: undefined },
+        { label: 'Reservations', href: '/contact', isExternal: false, icon: undefined },
         { label: 'Contact', href: '/contact', isExternal: false, icon: undefined },
       ]
     },
@@ -266,7 +267,9 @@ const Footer: React.FC = () => {
                           </Box>
                         )}
                         <Link
-                          href={item.href}
+                          as={!item.isExternal && item.href.startsWith('/') ? RouterLink : undefined}
+                          to={!item.isExternal && item.href.startsWith('/') ? (item.href as any) : undefined}
+                          href={item.isExternal || !item.href.startsWith('/') ? item.href : undefined}
                           color="rgba(255, 255, 255, 0.7)"
                           fontSize="0.95rem"
                           fontWeight={300}
@@ -293,13 +296,15 @@ const Footer: React.FC = () => {
           <HStack spacing={8} justify="center" w="100%">
             {/* Facebook Icon */}
             <Link
-              href="#"
+              href="https://www.facebook.com/thejewishmothersdeli"
               color="rgba(255, 255, 255, 0.7)"
               fontSize="1.2rem"
               p={5}
               borderRadius="50%"
               bg="rgba(255, 255, 255, 0.1)"
               aria-label="Visit our Facebook page"
+              target="_blank"
+              rel="noopener noreferrer"
               _hover={{
                 bg: 'rgba(255, 255, 255, 0.2)',
                 color: 'brand.cream',
@@ -340,13 +345,15 @@ const Footer: React.FC = () => {
 
             {/* Instagram Icon */}
             <Link
-              href="#"
+              href="https://www.instagram.com/thejewishmothersdeli"
               color="rgba(255, 255, 255, 0.7)"
               fontSize="1.2rem"
               p={5}
               borderRadius="50%"
               bg="rgba(255, 255, 255, 0.1)"
               aria-label="Visit our Instagram page"
+              target="_blank"
+              rel="noopener noreferrer"
               _hover={{
                 bg: 'rgba(255, 255, 255, 0.2)',
                 color: 'brand.cream',
@@ -394,7 +401,7 @@ const Footer: React.FC = () => {
               </Box>
             </Link>
 
-            {/* Twitter/X Icon */}
+            {/* Twitter/X Icon (placeholder) */}
             <Link
               href="#"
               color="rgba(255, 255, 255, 0.7)"
@@ -472,7 +479,8 @@ const Footer: React.FC = () => {
             
             <HStack spacing={6} fontSize="0.9rem">
               <Link
-                href="/privacy"
+                as={RouterLink}
+                to="/privacy"
                 color="rgba(255, 255, 255, 0.6)"
                 _hover={{
                   color: 'brand.cream',
@@ -482,7 +490,8 @@ const Footer: React.FC = () => {
                 Privacy Policy
               </Link>
               <Link
-                href="/terms"
+                as={RouterLink}
+                to="/terms"
                 color="rgba(255, 255, 255, 0.6)"
                 _hover={{
                   color: 'brand.cream',
