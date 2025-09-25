@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd full-site && npm ci",
+  "buildCommand": "cd full-site && npm run build",
+  "outputDirectory": "full-site/dist"
+}
