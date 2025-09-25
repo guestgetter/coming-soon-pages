@@ -1,7 +1,7 @@
 {
-  "installCommand": "cd full-site && npm ci",
-  "buildCommand": "cd full-site && npm run build",
-  "outputDirectory": "full-site/dist",
+  "installCommand": "cd templates/jewish-mothers-deli/full-site && npm ci",
+  "buildCommand": "cd templates/jewish-mothers-deli/full-site && npm run build",
+  "outputDirectory": "templates/jewish-mothers-deli/full-site/dist",
   "routes": [
     { "src": "/(.*)", "dest": "/index.html" }
   ]
