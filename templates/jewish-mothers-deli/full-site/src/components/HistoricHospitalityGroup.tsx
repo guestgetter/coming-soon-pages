@@ -11,6 +11,8 @@ import {
   Link,
   Badge,
   Center,
+  Flex,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
@@ -90,102 +92,143 @@ const restaurants: Restaurant[] = [
 ];
 
 const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ restaurant, index }) => {
+  const isEven = index % 2 === 0;
+  const flexDirection = useBreakpointValue({ 
+    base: 'column' as const, 
+    lg: isEven ? ('row' as const) : ('row-reverse' as const)
+  });
+  
   return (
     <MotionBox
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
       viewport={{ once: true }}
-      bg="rgba(255, 255, 255, 0.9)"
-      backdropFilter="blur(10px)"
-      borderRadius="20px"
-      overflow="hidden"
-      boxShadow="0 20px 60px rgba(111, 62, 19, 0.1)"
-      _hover={{
-        transform: 'translateY(-10px)',
-        boxShadow: '0 30px 80px rgba(111, 62, 19, 0.15)',
-      }}
-      border="1px solid"
-      borderColor="rgba(138, 84, 46, 0.1)"
-      mb="6"
+      maxW="1200px"
+      w="100%"
     >
-      <Box position="relative" overflow="hidden">
-        <Image
-          src={restaurant.image}
-          alt={restaurant.name}
-          height="300px"
-          width="100%"
-          objectFit="cover"
-          _hover={{ transform: 'scale(1.05)' }}
-          transition="transform 0.4s ease"
-        />
-      </Box>
-      
-      <VStack spacing="4" p="6" align="stretch">
-        <VStack spacing="2" align="stretch">
-          <Heading
-            size="lg"
-            fontFamily="heading"
-            color="brand.darkBrown"
-            textAlign="center"
-          >
-            {restaurant.name}
-          </Heading>
-          
-          <Text
-            variant="tagline"
-            textAlign="center"
-            fontStyle="italic"
-            color="brand.mediumBrown"
-          >
-            "{restaurant.tagline}"
-          </Text>
-          
-          <HStack justify="center" spacing="2">
-            <Text fontSize="sm" color="brand.lightBrown">
-              {restaurant.location}
-            </Text>
-            <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
-              • {restaurant.cuisine}
-            </Text>
-          </HStack>
-        </VStack>
-        
-        <Text
-          variant="description"
-          textAlign="center"
-          lineHeight="1.6"
-          noOfLines={4}
+      <Box
+        bg="rgba(255, 255, 255, 0.95)"
+        backdropFilter="blur(15px)"
+        borderRadius="24px"
+        overflow="hidden"
+        boxShadow="0 25px 80px rgba(111, 62, 19, 0.12)"
+        _hover={{
+          transform: 'translateY(-8px)',
+          boxShadow: '0 35px 100px rgba(111, 62, 19, 0.18)',
+        }}
+        transition="all 0.5s ease"
+        border="1px solid"
+        borderColor="rgba(138, 84, 46, 0.08)"
+      >
+        <Flex
+          direction={flexDirection}
+          align="stretch"
+          minH={{ base: "auto", lg: "400px" }}
         >
-          {restaurant.description}
-        </Text>
-        
-        <VStack spacing="3" mt="4">
-          <Badge
-            colorScheme={restaurant.status === 'open' ? 'green' : 'orange'}
-            variant="solid"
-            borderRadius="full"
-            px="3"
-            py="1"
-            fontSize="xs"
-            textTransform="uppercase"
-            letterSpacing="0.5px"
+          {/* Image Section */}
+          <Box 
+            flex="1" 
+            position="relative" 
+            overflow="hidden"
+            minH={{ base: "250px", lg: "400px" }}
           >
-            {restaurant.status === 'open' ? 'Open Now' : 'Coming Soon'}
-          </Badge>
+            <Image
+              src={restaurant.image}
+              alt={restaurant.name}
+              width="100%"
+              height="100%"
+              objectFit="cover"
+              _hover={{ transform: 'scale(1.03)' }}
+              transition="transform 0.6s ease"
+            />
+          </Box>
           
-          <Button
-            as={Link}
-            href={restaurant.website}
-            isExternal
-            variant="primary"
-            size="lg"
-            _hover={{ textDecoration: 'none' }}
+          {/* Content Section */}
+          <VStack 
+            flex="1" 
+            spacing="6" 
+            p={{ base: "8", lg: "12" }} 
+            align="stretch"
+            justify="center"
+            textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
           >
-            Visit Website
-          </Button>
-        </VStack>
-      </VStack>
+            <VStack spacing="3" align={isEven ? "flex-start" : "flex-end"}>
+              <Heading
+                size="xl"
+                fontFamily="heading"
+                color="brand.darkBrown"
+                textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
+              >
+                {restaurant.name}
+              </Heading>
+              
+              <Text
+                variant="tagline"
+                fontSize="lg"
+                fontStyle="italic"
+                color="brand.mediumBrown"
+                textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
+              >
+                "{restaurant.tagline}"
+              </Text>
+              
+              <HStack 
+                spacing="2" 
+                justify={{ base: "center", lg: isEven ? "flex-start" : "flex-end" }}
+                flexWrap="wrap"
+              >
+                <Text fontSize="sm" color="brand.lightBrown">
+                  {restaurant.location}
+                </Text>
+                <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
+                  • {restaurant.cuisine}
+                </Text>
+              </HStack>
+            </VStack>
+            
+            <Text
+              variant="description"
+              fontSize="md"
+              lineHeight="1.7"
+              textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
+            >
+              {restaurant.description}
+            </Text>
+            
+            <VStack 
+              spacing="4" 
+              align={{ base: "center", lg: isEven ? "flex-start" : "flex-end" }}
+            >
+              <Badge
+                colorScheme={restaurant.status === 'open' ? 'green' : 'orange'}
+                variant="solid"
+                borderRadius="full"
+                px="4"
+                py="2"
+                fontSize="xs"
+                textTransform="uppercase"
+                letterSpacing="0.8px"
+                fontWeight="600"
+              >
+                {restaurant.status === 'open' ? 'Open Now' : 'Coming Soon'}
+              </Badge>
+              
+              <Button
+                as={Link}
+                href={restaurant.website}
+                isExternal
+                variant="primary"
+                size="lg"
+                px="8"
+                _hover={{ textDecoration: 'none' }}
+              >
+                Visit Website
+              </Button>
+            </VStack>
+          </VStack>
+        </Flex>
+      </Box>
     </MotionBox>
   );
 };
@@ -301,34 +344,13 @@ const HistoricHospitalityGroup: React.FC = () => {
               </Text>
             </VStack>
             
-            {/* Featured Restaurant - Ember */}
-            <Box mb="12">
-              <Text
-                variant="tagline"
-                fontSize="xl"
-                textAlign="center"
-                mb="8"
-              >
-                Featured Restaurant
-              </Text>
-              <RestaurantCard restaurant={restaurants[0]} index={0} />
-            </Box>
-            
-            {/* Other Restaurants Grid */}
-            <VStack spacing="8" width="100%">
-              <Text
-                variant="tagline"
-                fontSize="xl"
-                textAlign="center"
-              >
-                Our Restaurant Collection
-              </Text>
-              
-              {restaurants.slice(1).map((restaurant, index) => (
+            {/* Restaurant Collection */}
+            <VStack spacing="12" width="100%">
+              {restaurants.map((restaurant, index) => (
                 <RestaurantCard
                   key={restaurant.name}
                   restaurant={restaurant}
-                  index={index + 1}
+                  index={index}
                 />
               ))}
             </VStack>
