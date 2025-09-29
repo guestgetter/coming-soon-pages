@@ -206,7 +206,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         {/* Mobile Layout */}
         {isMobile && (
           <>
-            {/* White background overlay when menu is open */}
+            {/* Header background overlay when menu is open - match site background */}
             {isOpen && (
               <Box
                 position="absolute"
@@ -215,11 +215,30 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 right="0px"
                 zIndex={9998}
                 h="140px"
-                bg="white"
-              />
+                bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
+              >
+                {/* Subtle pattern overlay for consistency */}
+                <Box
+                  position="absolute"
+                  top="0"
+                  left="0"
+                  right="0"
+                  bottom="0"
+                  opacity="0.03"
+                  backgroundImage="radial-gradient(circle at 25% 25%, #8a542e 2px, transparent 2px), radial-gradient(circle at 75% 75%, #6f3e13 2px, transparent 2px)"
+                  backgroundSize="60px 60px"
+                  pointerEvents="none"
+                />
+                {/* Centered logo in mobile menu header */}
+                <Box position="relative" h="100%" display="flex" alignItems="center" justifyContent="center">
+                  <Link to="/" onClick={() => handleNavigation('/')}>
+                    {logoImage}
+                  </Link>
+                </Box>
+              </Box>
             )}
             
-            {/* White background specifically for X icon when menu is open */}
+            {/* Clean background for X icon when menu is open */}
             {isOpen && (
               <Box
                 position="absolute"
@@ -229,8 +248,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 transform="translateY(-50%)"
                 w="44px"
                 h="44px"
-                bg="white"
-                borderRadius="md"
+                bg="transparent"
               />
             )}
             
@@ -242,12 +260,12 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 onClick={onToggle}
                 variant="ghost"
                 color={isOpen ? 'brand.darkBrown' : (isScrolled ? 'brand.darkBrown' : 'brand.mediumBrown')}
-                bg={isOpen ? 'white' : 'transparent'}
+                bg={isOpen ? 'transparent' : 'transparent'}
                 _hover={{
                   color: 'brand.mediumBrown',
-                  bg: isOpen ? 'white' : 'rgba(255, 255, 255, 0.1)',
+                  bg: isOpen ? 'transparent' : 'rgba(255, 255, 255, 0.1)',
                 }}
-                border={isOpen ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'}
+                border={'none'}
                 size="lg"
                 fontSize="24px"
                 transition="all 0.3s ease"
