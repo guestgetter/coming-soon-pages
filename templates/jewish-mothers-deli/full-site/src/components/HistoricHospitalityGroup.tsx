@@ -13,6 +13,8 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 const MotionBox = motion(Box);
 const MotionVStack = motion(VStack);
@@ -107,15 +109,17 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
       borderColor="rgba(138, 84, 46, 0.1)"
       mb="6"
     >
-      <Image
-        src={restaurant.image}
-        alt={restaurant.name}
-        height="200px"
-        width="100%"
-        objectFit="cover"
-        _hover={{ transform: 'scale(1.02)' }}
-        transition="transform 0.4s ease"
-      />
+      <Box position="relative" overflow="hidden">
+        <Image
+          src={restaurant.image}
+          alt={restaurant.name}
+          height="300px"
+          width="100%"
+          objectFit="cover"
+          _hover={{ transform: 'scale(1.05)' }}
+          transition="transform 0.4s ease"
+        />
+      </Box>
       
       <VStack spacing="4" p="6" align="stretch">
         <VStack spacing="2" align="stretch">
@@ -188,12 +192,14 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
 
 const HistoricHospitalityGroup: React.FC = () => {
   return (
-    <Box
-      minHeight="100vh"
-      bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
-      position="relative"
-      overflow="hidden"
-    >
+    <Box minHeight="100vh" display="flex" flexDirection="column">
+      <Navbar />
+      <Box
+        flex="1"
+        bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
+        position="relative"
+        overflow="hidden"
+      >
       {/* Background Patterns */}
       <Box
         position="absolute"
@@ -209,7 +215,7 @@ const HistoricHospitalityGroup: React.FC = () => {
       
       {/* Hero Section */}
       <Container maxW="container.xl" position="relative" zIndex="2">
-        <Center minHeight="100vh">
+        <Center minHeight="80vh" py="20">
           <MotionVStack
             spacing="8"
             textAlign="center"
@@ -378,6 +384,8 @@ const HistoricHospitalityGroup: React.FC = () => {
           </VStack>
         </Container>
       </MotionBox>
+      </Box>
+      <Footer />
     </Box>
   );
 };
