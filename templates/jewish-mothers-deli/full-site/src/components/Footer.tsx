@@ -469,13 +469,34 @@ const Footer: React.FC = () => {
             gap={4}
             textAlign={{ base: 'center', md: 'left' }}
           >
-            <Text
-              fontSize="0.9rem"
-              color="rgba(255, 255, 255, 0.6)"
-              fontWeight={300}
-            >
-              © {currentYear} Jewish Mother's Deli. All rights reserved.
-            </Text>
+            <VStack spacing={1} align={{ base: 'center', md: 'flex-start' }}>
+              <Text
+                fontSize="0.9rem"
+                color="rgba(255, 255, 255, 0.6)"
+                fontWeight={300}
+              >
+                © {currentYear} Jewish Mother's Deli. All rights reserved.
+              </Text>
+              <Text
+                fontSize="0.8rem"
+                color="rgba(255, 255, 255, 0.5)"
+                fontWeight={300}
+              >
+                The Jewish Mother's Deli is brought to you by{' '}
+                <Link
+                  as={RouterLink}
+                  to="/historic-hospitality"
+                  color="brand.cream"
+                  _hover={{
+                    color: 'white',
+                    textDecoration: 'underline',
+                  }}
+                  fontWeight={400}
+                >
+                  Historic Hospitality
+                </Link>
+              </Text>
+            </VStack>
             
             <HStack spacing={6} fontSize="0.9rem">
               <Link
