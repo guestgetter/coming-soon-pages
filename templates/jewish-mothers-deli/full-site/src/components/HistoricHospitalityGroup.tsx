@@ -10,8 +10,6 @@ import {
   Button,
   Link,
   Center,
-  Flex,
-  useBreakpointValue,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
@@ -79,125 +77,73 @@ const restaurants: Restaurant[] = [
 ];
 
 const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ restaurant, index }) => {
-  const isEven = index % 2 === 0;
-  const flexDirection = useBreakpointValue({ 
-    base: 'column' as const, 
-    lg: isEven ? ('row' as const) : ('row-reverse' as const)
-  });
-  
   return (
     <MotionBox
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.06 }}
       viewport={{ once: true }}
-      maxW="1200px"
+      maxW="1000px"
       w="100%"
     >
       <Box
         bg="rgba(255, 255, 255, 0.95)"
-        backdropFilter="blur(15px)"
-        borderRadius="24px"
+        backdropFilter="blur(12px)"
+        borderRadius="20px"
         overflow="hidden"
-        boxShadow="0 25px 80px rgba(111, 62, 19, 0.12)"
-        _hover={{
-          transform: 'translateY(-8px)',
-          boxShadow: '0 35px 100px rgba(111, 62, 19, 0.18)',
-        }}
-        transition="all 0.5s ease"
+        boxShadow="0 20px 60px rgba(111, 62, 19, 0.12)"
+        transition="transform 0.4s ease, box-shadow 0.4s ease"
         border="1px solid"
         borderColor="rgba(138, 84, 46, 0.08)"
+        _hover={{ transform: 'translateY(-6px)', boxShadow: '0 28px 80px rgba(111, 62, 19, 0.16)' }}
       >
-        <Flex
-          direction={flexDirection}
-          align="stretch"
-          minH={{ base: "auto", lg: "400px" }}
-        >
-          {/* Image Section */}
-          <Box 
-            flex="1" 
-            position="relative" 
-            overflow="hidden"
-            minH={{ base: "250px", lg: "400px" }}
-          >
-            <Image
-              src={restaurant.image}
-              alt={restaurant.name}
-              width="100%"
-              height="100%"
-              objectFit="cover"
-              _hover={{ transform: 'scale(1.03)' }}
-              transition="transform 0.6s ease"
-            />
-          </Box>
-          
-          {/* Content Section */}
-          <VStack 
-            flex="1" 
-            spacing="6" 
-            p={{ base: "8", lg: "12" }} 
-            align="stretch"
-            justify="center"
-            textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
-          >
-            <VStack spacing="3" align={isEven ? "flex-start" : "flex-end"}>
-              <Heading
-                size="xl"
-                fontFamily="heading"
-                color="brand.darkBrown"
-                textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
-              >
-                {restaurant.name}
-              </Heading>
-              
-              <Text
-                variant="tagline"
-                fontSize="lg"
-                fontStyle="italic"
-                color="brand.mediumBrown"
-                textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
-              >
-                "{restaurant.tagline}"
-              </Text>
-              
-              <HStack 
-                spacing="2" 
-                justify={{ base: "center", lg: isEven ? "flex-start" : "flex-end" }}
-                flexWrap="wrap"
-              >
-                <Text fontSize="sm" color="brand.lightBrown">
-                  {restaurant.location}
-                </Text>
-                <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
-                  • {restaurant.cuisine}
-                </Text>
-              </HStack>
-            </VStack>
-            
-            <Text
-              variant="description"
-              fontSize="md"
-              lineHeight="1.7"
-              textAlign={{ base: "center", lg: isEven ? "left" : "right" }}
-            >
-              {restaurant.description}
+        {/* Image */}
+        <Box position="relative" overflow="hidden">
+          <Image
+            src={restaurant.image}
+            alt={restaurant.name}
+            width="100%"
+            height="360px"
+            objectFit="cover"
+            transition="transform 0.6s ease"
+            _hover={{ transform: 'scale(1.03)' }}
+          />
+        </Box>
+
+        {/* Content */}
+        <VStack spacing={4} align="stretch" p={{ base: 6, md: 8 }}>
+          <Heading size="lg" fontFamily="heading" color="brand.darkBrown">
+            {restaurant.name}
+          </Heading>
+          <Text variant="tagline">"{restaurant.tagline}"</Text>
+
+          <HStack spacing={2}>
+            <Text fontSize="sm" color="brand.lightBrown">
+              {restaurant.location}
             </Text>
-            
-            <Flex justify={{ base: "center", lg: isEven ? "flex-start" : "flex-end" }}>
-              <Button
-                as={Link}
-                href={restaurant.website}
-                isExternal
-                variant="primary"
-                size="lg"
-                px="8"
-                _hover={{ textDecoration: 'none' }}
-              >
-                Visit Website
-              </Button>
-            </Flex>
-          </VStack>
-        </Flex>
+            <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
+              • {restaurant.cuisine}
+            </Text>
+          </HStack>
+
+          <Text variant="description" fontSize="md" lineHeight="1.7">
+            {restaurant.description}
+          </Text>
+
+          <HStack justify="flex-start" pt={2}>
+            <Button
+              as={Link}
+              href={restaurant.website}
+              isExternal
+              variant="primary"
+              size="lg"
+              px="8"
+              _hover={{ textDecoration: 'none' }}
+            >
+              Visit Website
+            </Button>
+          </HStack>
+        </VStack>
       </Box>
     </MotionBox>
   );
