@@ -386,10 +386,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
       {isMobile && (
         <Collapse in={isOpen} animateOpacity>
           <Box
-            bg="white"
-            backdropFilter="none"
-            borderTop="none"
-            boxShadow="none"
+            bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
             position="fixed"
             top={isOpen ? "140px" : (shrinkLogo ? "100px" : "120px")}
             left="0"
@@ -397,38 +394,132 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
             zIndex={9999}
             minH="100vh"
           >
-            {/* Comfortable spacing from top */}
-            <VStack spacing={6} pt={shrinkLogo ? "20px" : "20px"} align="center" justify="flex-start" minH="100vh">
-              {navItems.map((item) => (
-                <Box key={item.name}>
-                  <Link to={item.path} onClick={() => handleNavigation(item.path)}>
-                    <Button
-                      variant="ghost"
-                      color={isActivePage(item.path) ? 'brand.mediumBrown' : 'brand.darkBrown'}
-                      _hover={{
-                        color: 'brand.mediumBrown',
-                        bg: 'rgba(138, 84, 46, 0.1)',
-                      }}
-                      fontWeight={isActivePage(item.path) ? 600 : 500}
-                      fontSize="1.2rem"
-                      justifyContent="center"
-                      px={8}
-                      py={4}
-                      borderRadius="md"
-                      bg={isActivePage(item.path) ? 'rgba(138, 84, 46, 0.05)' : 'transparent'}
-                      minW="120px"
-                      textTransform="uppercase"
-                      letterSpacing="0.5px"
-                      transition="all 0.3s ease"
-                      _active={{
-                        transform: "scale(0.95)",
-                      }}
-                    >
-                      {item.name}
-                    </Button>
-                  </Link>
+            {/* Background Pattern */}
+            <Box
+              position="absolute"
+              top="0"
+              left="0"
+              right="0"
+              bottom="0"
+              opacity="0.03"
+              backgroundImage="radial-gradient(circle at 25% 25%, #8a542e 2px, transparent 2px), radial-gradient(circle at 75% 75%, #6f3e13 2px, transparent 2px)"
+              backgroundSize="60px 60px"
+              pointerEvents="none"
+            />
+            
+            <VStack 
+              spacing={8} 
+              pt="40px" 
+              pb="40px"
+              px="20px"
+              align="center" 
+              justify="flex-start" 
+              minH="calc(100vh - 140px)"
+              position="relative"
+              zIndex="1"
+            >
+              {/* Navigation Links */}
+              <VStack spacing={4} mb="8">
+                {navItems.map((item) => (
+                  <Box key={item.name}>
+                    <Link to={item.path} onClick={() => handleNavigation(item.path)}>
+                      <Button
+                        variant="ghost"
+                        color={isActivePage(item.path) ? 'brand.mediumBrown' : 'brand.darkBrown'}
+                        _hover={{
+                          color: 'brand.mediumBrown',
+                          bg: 'rgba(138, 84, 46, 0.1)',
+                        }}
+                        fontWeight={isActivePage(item.path) ? 600 : 500}
+                        fontSize="1.1rem"
+                        justifyContent="center"
+                        px={8}
+                        py={3}
+                        borderRadius="md"
+                        bg={isActivePage(item.path) ? 'rgba(138, 84, 46, 0.05)' : 'transparent'}
+                        minW="200px"
+                        textTransform="uppercase"
+                        letterSpacing="0.5px"
+                        transition="all 0.3s ease"
+                        _active={{
+                          transform: "scale(0.95)",
+                        }}
+                      >
+                        {item.name}
+                      </Button>
+                    </Link>
+                  </Box>
+                ))}
+              </VStack>
+
+              {/* Call-to-Action Buttons */}
+              <VStack spacing={4} w="100%" maxW="280px">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  w="100%"
+                  fontSize="1rem"
+                  fontWeight="600"
+                  textTransform="uppercase"
+                  letterSpacing="0.8px"
+                  py="6"
+                  onClick={() => {
+                    // Add order functionality here
+                    window.open('tel:+17575551234', '_self');
+                  }}
+                >
+                  ORDER NOW
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="lg"
+                  w="100%"
+                  fontSize="1rem"
+                  fontWeight="600"
+                  textTransform="uppercase"
+                  letterSpacing="0.8px"
+                  py="6"
+                  borderColor="brand.mediumBrown"
+                  color="brand.mediumBrown"
+                  _hover={{
+                    bg: 'brand.mediumBrown',
+                    color: 'white',
+                  }}
+                  onClick={() => {
+                    window.open('https://maps.google.com/?q=Jewish+Mother\'s+Deli+Williamsburg+VA', '_blank');
+                  }}
+                >
+                  GET DIRECTIONS
+                </Button>
+              </VStack>
+
+              {/* Phone Number */}
+              <VStack spacing={2} mt="6">
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  fontSize="1.2rem"
+                  fontWeight="600"
+                  color="brand.darkBrown"
+                  _hover={{
+                    color: 'brand.mediumBrown',
+                  }}
+                  onClick={() => {
+                    window.open('tel:+17575551234', '_self');
+                  }}
+                >
+                  (757) 555-1234
+                </Button>
+                <Box
+                  fontSize="sm"
+                  color="brand.lightBrown"
+                  textAlign="center"
+                  fontStyle="italic"
+                >
+                  Tap to call
                 </Box>
-              ))}
+              </VStack>
             </VStack>
           </Box>
         </Collapse>

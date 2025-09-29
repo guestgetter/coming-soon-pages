@@ -9,7 +9,6 @@ import {
   HStack,
   Button,
   Link,
-  Badge,
   Center,
   Flex,
   useBreakpointValue,
@@ -29,8 +28,6 @@ interface Restaurant {
   website: string;
   location: string;
   cuisine: string;
-  status: 'open' | 'coming-soon';
-  features: string[];
 }
 
 const restaurants: Restaurant[] = [
@@ -41,9 +38,7 @@ const restaurants: Restaurant[] = [
     image: "/images/ember-restaurant-williamsburg-virginia.avif",
     website: "https://www.emberwilliamsburg.com",
     location: "Williamsburg, VA",
-    cuisine: "Fusion & Steakhouse",
-    status: "coming-soon",
-    features: ["Premium Steaks", "Fresh Sushi", "Chef Tastings", "Private Events"]
+    cuisine: "Fusion & Steakhouse"
   },
   {
     name: "Waypoint Seafood & Grill",
@@ -52,9 +47,7 @@ const restaurants: Restaurant[] = [
     image: "/images/waypoint-seafood-and-grill-williamburg-virginia.avif",
     website: "https://www.waypointgrill.com",
     location: "Williamsburg, VA",
-    cuisine: "Coastal Seafood",
-    status: "open",
-    features: ["Chesapeake Oysters", "Hand-Cut Steaks", "Wine Nights", "Daily Happy Hour"]
+    cuisine: "Coastal Seafood"
   },
   {
     name: "Riverwalk Restaurant",
@@ -63,9 +56,7 @@ const restaurants: Restaurant[] = [
     image: "/images/riverwalk-restaurant-yorktown-virginia.avif",
     website: "https://riverwalkrestaurantva.com",
     location: "Yorktown, VA",
-    cuisine: "American Fine Dining",
-    status: "open",
-    features: ["Waterfront Views", "Private Events", "Local Sourcing", "Seasonal Menu"]
+    cuisine: "American Fine Dining"
   },
   {
     name: "Water Street Grille",
@@ -74,9 +65,7 @@ const restaurants: Restaurant[] = [
     image: "/images/water-street-grille-yorktown-virginia.avif",
     website: "https://waterstreetgrille.net",
     location: "Yorktown, VA",
-    cuisine: "Contemporary American",
-    status: "open",
-    features: ["Waterfront Dining", "Local Seafood", "Craft Cocktails", "Catering"]
+    cuisine: "Contemporary American"
   },
   {
     name: "Jewish Mother's Deli",
@@ -85,9 +74,7 @@ const restaurants: Restaurant[] = [
     image: "/images/jewish-mothers-deli-williamsburg-virginia.jpg",
     website: "https://www.thejewishmothersdeli.com",
     location: "Williamsburg, VA",
-    cuisine: "Jewish Deli",
-    status: "coming-soon",
-    features: ["Traditional Recipes", "Fresh Bagels", "Matzo Ball Soup", "Family Heritage"]
+    cuisine: "Jewish Deli"
   }
 ];
 
@@ -196,24 +183,7 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
               {restaurant.description}
             </Text>
             
-            <VStack 
-              spacing="4" 
-              align={{ base: "center", lg: isEven ? "flex-start" : "flex-end" }}
-            >
-              <Badge
-                colorScheme={restaurant.status === 'open' ? 'green' : 'orange'}
-                variant="solid"
-                borderRadius="full"
-                px="4"
-                py="2"
-                fontSize="xs"
-                textTransform="uppercase"
-                letterSpacing="0.8px"
-                fontWeight="600"
-              >
-                {restaurant.status === 'open' ? 'Open Now' : 'Coming Soon'}
-              </Badge>
-              
+            <Flex justify={{ base: "center", lg: isEven ? "flex-start" : "flex-end" }}>
               <Button
                 as={Link}
                 href={restaurant.website}
@@ -225,7 +195,7 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
               >
                 Visit Website
               </Button>
-            </VStack>
+            </Flex>
           </VStack>
         </Flex>
       </Box>
@@ -258,7 +228,7 @@ const HistoricHospitalityGroup: React.FC = () => {
       
       {/* Hero Section */}
       <Container maxW="container.xl" position="relative" zIndex="2">
-        <Center minHeight="80vh" py="20">
+        <Center minHeight="80vh" py="32">
           <MotionVStack
             spacing="8"
             textAlign="center"
