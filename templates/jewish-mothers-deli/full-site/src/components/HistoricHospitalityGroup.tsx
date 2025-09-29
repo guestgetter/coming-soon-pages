@@ -4,7 +4,6 @@ import {
   Container,
   Heading,
   Text,
-  SimpleGrid,
   Image,
   VStack,
   HStack,
@@ -95,16 +94,17 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true }}
-      bg="rgba(40, 40, 40, 0.9)"
+      bg="rgba(255, 255, 255, 0.9)"
       backdropFilter="blur(10px)"
-      borderRadius="0px"
+      borderRadius="20px"
       overflow="hidden"
-      border="1px solid rgba(200, 180, 120, 0.3)"
+      boxShadow="0 20px 60px rgba(111, 62, 19, 0.1)"
       _hover={{
-        transform: 'translateY(-5px)',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-        border: "1px solid rgba(200, 180, 120, 0.5)",
+        transform: 'translateY(-10px)',
+        boxShadow: '0 30px 80px rgba(111, 62, 19, 0.15)',
       }}
+      border="1px solid"
+      borderColor="rgba(138, 84, 46, 0.1)"
       mb="6"
     >
       <Image
@@ -117,59 +117,55 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
         transition="transform 0.4s ease"
       />
       
-      <VStack spacing="4" p="6" align="stretch" color="white">
+      <VStack spacing="4" p="6" align="stretch">
         <VStack spacing="2" align="stretch">
           <Heading
             size="lg"
-            fontFamily="'Playfair Display', serif"
-            color="#C8B478"
-            textAlign="left"
-            fontWeight="400"
+            fontFamily="heading"
+            color="brand.darkBrown"
+            textAlign="center"
           >
             {restaurant.name}
           </Heading>
           
           <Text
-            fontSize="md"
+            variant="tagline"
+            textAlign="center"
             fontStyle="italic"
-            color="#C8B478"
-            textAlign="left"
-            fontFamily="'Playfair Display', serif"
+            color="brand.mediumBrown"
           >
-            {restaurant.tagline}
+            "{restaurant.tagline}"
           </Text>
           
-          <HStack justify="flex-start" spacing="2" mt="2">
-            <Text fontSize="sm" color="rgba(255, 255, 255, 0.7)">
+          <HStack justify="center" spacing="2">
+            <Text fontSize="sm" color="brand.lightBrown">
               {restaurant.location}
             </Text>
-            <Text fontSize="sm" color="#C8B478">
+            <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
               • {restaurant.cuisine}
             </Text>
           </HStack>
         </VStack>
         
         <Text
-          fontSize="sm"
-          color="rgba(255, 255, 255, 0.8)"
-          textAlign="left"
+          variant="description"
+          textAlign="center"
           lineHeight="1.6"
+          noOfLines={4}
         >
           {restaurant.description}
         </Text>
         
-        <HStack justify="space-between" align="center" mt="4">
+        <VStack spacing="3" mt="4">
           <Badge
             colorScheme={restaurant.status === 'open' ? 'green' : 'orange'}
-            variant="outline"
-            borderRadius="0px"
+            variant="solid"
+            borderRadius="full"
             px="3"
             py="1"
             fontSize="xs"
             textTransform="uppercase"
             letterSpacing="0.5px"
-            borderColor={restaurant.status === 'open' ? '#C8B478' : '#D69E2E'}
-            color={restaurant.status === 'open' ? '#C8B478' : '#D69E2E'}
           >
             {restaurant.status === 'open' ? 'Open Now' : 'Coming Soon'}
           </Badge>
@@ -178,27 +174,13 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
             as={Link}
             href={restaurant.website}
             isExternal
-            bg="#C8B478"
-            color="black"
-            size="sm"
-            borderRadius="0px"
-            fontWeight="600"
-            fontSize="xs"
-            textTransform="uppercase"
-            letterSpacing="0.5px"
-            px="6"
-            _hover={{ 
-              bg: "#D4C087",
-              textDecoration: 'none',
-              transform: 'translateY(-2px)'
-            }}
-            _active={{
-              transform: 'translateY(0px)'
-            }}
+            variant="primary"
+            size="lg"
+            _hover={{ textDecoration: 'none' }}
           >
             Visit Website
           </Button>
-        </HStack>
+        </VStack>
       </VStack>
     </MotionBox>
   );
@@ -208,30 +190,21 @@ const HistoricHospitalityGroup: React.FC = () => {
   return (
     <Box
       minHeight="100vh"
-      bg="black"
+      bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
       position="relative"
       overflow="hidden"
     >
-      {/* Hero Background Image */}
+      {/* Background Patterns */}
       <Box
         position="absolute"
         top="0"
         left="0"
         right="0"
-        height="100vh"
-        backgroundImage="url('/images/ember-restaurant-williamsburg-virginia.avif')"
-        backgroundSize="cover"
-        backgroundPosition="center"
-        backgroundAttachment="fixed"
-        _after={{
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          bg: 'rgba(0, 0, 0, 0.7)',
-        }}
+        bottom="0"
+        opacity="0.03"
+        backgroundImage="radial-gradient(circle at 25% 25%, #8a542e 2px, transparent 2px), radial-gradient(circle at 75% 75%, #6f3e13 2px, transparent 2px)"
+        backgroundSize="60px 60px"
+        pointerEvents="none"
       />
       
       {/* Hero Section */}
@@ -243,34 +216,31 @@ const HistoricHospitalityGroup: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            color="white"
+            color="brand.darkBrown"
           >
             <Heading
               size="4xl"
-              fontFamily="'Playfair Display', serif"
-              color="#C8B478"
+              fontFamily="heading"
+              color="brand.darkBrown"
               fontWeight="400"
               mb="4"
+              textShadow="2px 2px 4px rgba(111, 62, 19, 0.1)"
             >
               Historic Hospitality
             </Heading>
             
             <Text
+              variant="tagline"
               fontSize="xl"
-              fontStyle="italic"
-              color="#C8B478"
-              fontFamily="'Playfair Display', serif"
               mb="6"
             >
-              Creating Exceptional Dining Experiences
+              "Creating Exceptional Dining Experiences"
             </Text>
             
             <Text
+              variant="description"
               fontSize="lg"
-              color="rgba(255, 255, 255, 0.9)"
               maxW="800px"
-              lineHeight="1.7"
-              fontWeight="300"
               mb="8"
             >
               At Historic Hospitality, we create and operate distinctive restaurants 
@@ -279,24 +249,8 @@ const HistoricHospitalityGroup: React.FC = () => {
             </Text>
             
             <Button
-              bg="#C8B478"
-              color="black"
+              variant="primary"
               size="lg"
-              borderRadius="0px"
-              fontWeight="600"
-              fontSize="sm"
-              textTransform="uppercase"
-              letterSpacing="1px"
-              px="12"
-              py="6"
-              _hover={{ 
-                bg: "#D4C087",
-                transform: 'translateY(-3px)',
-                boxShadow: '0 10px 30px rgba(200, 180, 120, 0.3)'
-              }}
-              _active={{
-                transform: 'translateY(-1px)'
-              }}
               onClick={() => {
                 document.getElementById('restaurants')?.scrollIntoView({ 
                   behavior: 'smooth' 
@@ -310,7 +264,7 @@ const HistoricHospitalityGroup: React.FC = () => {
       </Container>
       
       {/* Restaurants Section */}
-      <Box bg="black" py="20" id="restaurants">
+      <Box bg="brand.cream" py="20" id="restaurants">
         <Container maxW="container.lg">
           <MotionVStack
             spacing="16"
@@ -320,22 +274,21 @@ const HistoricHospitalityGroup: React.FC = () => {
             viewport={{ once: true }}
           >
             {/* Section Header */}
-            <VStack spacing="6" textAlign="center" color="white">
+            <VStack spacing="6" textAlign="center">
               <Heading
                 size="2xl"
-                fontFamily="'Playfair Display', serif"
-                color="#C8B478"
+                fontFamily="heading"
+                color="brand.darkBrown"
                 fontWeight="400"
+                textShadow="2px 2px 4px rgba(111, 62, 19, 0.1)"
               >
                 Our Restaurant Collection
               </Heading>
               
               <Text
+                variant="description"
                 fontSize="lg"
-                color="rgba(255, 255, 255, 0.8)"
                 maxW="700px"
-                lineHeight="1.7"
-                fontWeight="300"
               >
                 Each restaurant in our portfolio offers a unique culinary experience, 
                 united by our commitment to quality, service, and memorable dining.
@@ -345,12 +298,10 @@ const HistoricHospitalityGroup: React.FC = () => {
             {/* Featured Restaurant - Ember */}
             <Box mb="12">
               <Text
+                variant="tagline"
                 fontSize="xl"
-                fontFamily="'Playfair Display', serif"
-                color="#C8B478"
                 textAlign="center"
                 mb="8"
-                fontStyle="italic"
               >
                 Featured Restaurant
               </Text>
@@ -360,11 +311,9 @@ const HistoricHospitalityGroup: React.FC = () => {
             {/* Other Restaurants Grid */}
             <VStack spacing="8" width="100%">
               <Text
+                variant="tagline"
                 fontSize="xl"
-                fontFamily="'Playfair Display', serif"
-                color="#C8B478"
                 textAlign="center"
-                fontStyle="italic"
               >
                 Our Restaurant Collection
               </Text>
@@ -381,140 +330,54 @@ const HistoricHospitalityGroup: React.FC = () => {
         </Container>
       </Box>
       
-      {/* Footer */}
-      <Box bg="#1A1A1A" py="16" borderTop="1px solid rgba(200, 180, 120, 0.3)">
+      {/* Footer Section */}
+      <MotionBox
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        viewport={{ once: true }}
+        textAlign="center"
+        pt="16"
+        pb="8"
+        bg="brand.cream"
+      >
         <Container maxW="container.lg">
-          <VStack spacing="12">
-            {/* Contact Info Grid */}
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing="12" width="100%">
-              {/* Contact */}
-              <VStack spacing="4" align="center">
-                <Heading
-                  size="md"
-                  fontFamily="'Playfair Display', serif"
-                  color="#C8B478"
-                  fontWeight="400"
-                >
-                  Contact
-                </Heading>
-                <VStack spacing="2" color="rgba(255, 255, 255, 0.8)" fontSize="sm">
-                  <Text>(757) 555-1234</Text>
-                  <Text>403 W Duke of Gloucester St</Text>
-                  <Text>Williamsburg, VA 23185</Text>
-                  <Link 
-                    color="#C8B478" 
-                    _hover={{ color: "#D4C087" }}
-                    textDecoration="underline"
-                  >
-                    Get Directions
-                  </Link>
-                </VStack>
-              </VStack>
-              
-              {/* Hours */}
-              <VStack spacing="4" align="center">
-                <Heading
-                  size="md"
-                  fontFamily="'Playfair Display', serif"
-                  color="#C8B478"
-                  fontWeight="400"
-                >
-                  Hours
-                </Heading>
-                <VStack spacing="2" color="rgba(255, 255, 255, 0.8)" fontSize="sm" textAlign="center">
-                  <Text>Monday - Thursday</Text>
-                  <Text>5:00 PM - 10:00 PM</Text>
-                  <Text>Friday - Saturday</Text>
-                  <Text>5:00 PM - 11:00 PM</Text>
-                  <Text>Sunday</Text>
-                  <Text>4:00 PM - 9:00 PM</Text>
-                </VStack>
-              </VStack>
-              
-              {/* Our Company */}
-              <VStack spacing="4" align="center">
-                <Heading
-                  size="md"
-                  fontFamily="'Playfair Display', serif"
-                  color="#C8B478"
-                  fontWeight="400"
-                >
-                  Our Company
-                </Heading>
-                <VStack spacing="3" align="center">
-                  <Text color="rgba(255, 255, 255, 0.8)" fontSize="sm">
-                    Ember is brought to you by
-                  </Text>
-                  <Text
-                    fontFamily="'Playfair Display', serif"
-                    color="#C8B478"
-                    fontStyle="italic"
-                    fontSize="lg"
-                  >
-                    Historic Hospitality
-                  </Text>
-                  <Text 
-                    color="rgba(255, 255, 255, 0.7)" 
-                    fontSize="sm" 
-                    textAlign="center"
-                    maxW="250px"
-                  >
-                    Creating exceptional dining experiences in Virginia's Historic Triangle
-                  </Text>
-                </VStack>
-              </VStack>
-            </SimpleGrid>
-            
-            {/* Social Media */}
-            <VStack spacing="6">
-              <Heading
-                size="md"
-                fontFamily="'Playfair Display', serif"
-                color="#C8B478"
-                fontWeight="400"
+          <VStack spacing="8">
+            <VStack spacing="4">
+              <Text
+                variant="description"
+                fontSize="lg"
+                color="brand.mediumBrown"
+                fontWeight="500"
+                maxW="600px"
               >
-                Follow Us
-              </Heading>
-              <HStack spacing="6">
-                {['facebook', 'instagram', 'twitter', 'linkedin'].map((social) => (
-                  <Box
-                    key={social}
-                    as="button"
-                    w="12"
-                    h="12"
-                    borderRadius="full"
-                    border="2px solid #C8B478"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    color="#C8B478"
-                    _hover={{
-                      bg: "#C8B478",
-                      color: "black",
-                      transform: 'translateY(-2px)'
-                    }}
-                    transition="all 0.3s ease"
-                  >
-                    <Text fontSize="lg">📱</Text>
-                  </Box>
-                ))}
-              </HStack>
+                Each restaurant in our family is independently crafted to celebrate its unique character 
+                while maintaining our shared values of quality, tradition, and community.
+              </Text>
+              
+              <Text
+                fontSize="sm"
+                color="brand.lightBrown"
+                fontStyle="italic"
+              >
+                Historic Hospitality • Serving Virginia with Pride Since 2020
+              </Text>
             </VStack>
             
             {/* Copyright */}
-            <Box pt="8" borderTop="1px solid rgba(200, 180, 120, 0.2)">
+            <Box pt="6" borderTop="1px solid rgba(138, 84, 46, 0.2)">
               <Text
-                color="rgba(255, 255, 255, 0.6)"
                 fontSize="sm"
+                color="brand.lightBrown"
                 textAlign="center"
                 fontWeight="300"
               >
-                © 2025 Historic Hospitality. All rights reserved. | A Historic Hospitality Experience
+                © 2025 Historic Hospitality. All rights reserved.
               </Text>
             </Box>
           </VStack>
         </Container>
-      </Box>
+      </MotionBox>
     </Box>
   );
 };
