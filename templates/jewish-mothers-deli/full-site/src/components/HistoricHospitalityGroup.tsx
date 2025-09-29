@@ -10,14 +10,10 @@ import {
   HStack,
   Button,
   Link,
-  useBreakpointValue,
-  Flex,
-  Icon,
   Badge,
   Center,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
 
 const MotionBox = motion(Box);
 const MotionVStack = motion(VStack);
@@ -109,7 +105,6 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
         boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
         border: "1px solid rgba(200, 180, 120, 0.5)",
       }}
-      transition="all 0.4s ease"
       mb="6"
     >
       <Image
@@ -118,8 +113,8 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
         height="200px"
         width="100%"
         objectFit="cover"
-        transition="transform 0.4s ease"
         _hover={{ transform: 'scale(1.02)' }}
+        transition="transform 0.4s ease"
       />
       
       <VStack spacing="4" p="6" align="stretch" color="white">
