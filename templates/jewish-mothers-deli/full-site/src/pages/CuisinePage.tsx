@@ -286,7 +286,8 @@ const CuisinePage: React.FC = () => {
         <Box
           position="sticky"
           top={{ base: "60px", md: "100px", lg: "95px" }}
-          zIndex={1200}
+          zIndex={5000}
+          pointerEvents="auto"
           bg="brand.mediumBrown"
           py={4}
           mb={8}
@@ -302,13 +303,15 @@ const CuisinePage: React.FC = () => {
               wrap="wrap"
               overflowX="auto"
               px={4}
+              pointerEvents="auto"
             >
               {menuData.categories.map((category) => (
                 <Button
                   key={category.id}
                   as="a"
                   href={`#category-${category.id}`}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault()
                     scrollToCategory(category.id)
                   }}
                   variant="solid"
