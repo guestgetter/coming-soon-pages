@@ -2,7 +2,7 @@
   "installCommand": "cd full-site && npm ci",
   "buildCommand": "cd full-site && npm run build",
   "outputDirectory": "full-site/dist",
-  "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
