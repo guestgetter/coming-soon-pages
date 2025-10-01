@@ -7,6 +7,7 @@ import {
   VStack,
   useDisclosure,
   Collapse,
+  Flex,
   IconButton,
 } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'
@@ -301,25 +302,26 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
 
         {/* Desktop Navigation Layout */}
         {!isMobile && (
-          <Box position="relative" zIndex={3}>
-            <Box display="flex" alignItems="center" justifyContent="center" mb={{ base: 2, lg: 3 }}>
-              <Link to="/" onClick={() => handleNavigation('/')}>{logoImage}</Link>
-            </Box>
-            <HStack spacing={{ base: 2, md: 6 }} justify="center">
-              {navItems.map((item) => (
+          <Flex align="center" justify="space-between" position="relative" zIndex={3}>
+            {/* Left Navigation Links */}
+            <HStack spacing={4} justify="flex-end" flex={1} pr={{ base: 16, md: 24, lg: 36 }}>
+              {navItems.slice(0, 2).map((item) => (
                 <Link key={item.name} to={item.path} onClick={() => handleNavigation(item.path)}>
                   <Button
                     variant="ghost"
                     color={isActivePage(item.path) ? 'brand.mediumBrown' : (isScrolled ? 'brand.darkBrown' : 'brand.mediumBrown')}
-                    _hover={{ color: 'brand.mediumBrown', bg: 'rgba(255, 255, 255, 0.1)' }}
-                    fontWeight={isActivePage(item.path) ? 700 : 500}
+                    _hover={{
+                      color: 'brand.mediumBrown',
+                      bg: 'rgba(255, 255, 255, 0.1)',
+                    }}
+                    fontWeight={isActivePage(item.path) ? 600 : 500}
                     fontSize="1rem"
                     transition="all 0.3s ease"
                     position="relative"
                     _after={{
                       content: '""',
                       position: 'absolute',
-                      bottom: '-6px',
+                      bottom: '-4px',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       width: isActivePage(item.path) ? '100%' : '0%',
@@ -333,7 +335,68 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 </Link>
               ))}
             </HStack>
-          </Box>
+
+            {/* Logo Background Container */}
+            <Box
+              position="absolute"
+              left="50%"
+              top={isOpen ? "85%" : (shrinkLogo ? "0%" : "85%")}
+              transform="translate(-50%, -50%)"
+              zIndex={4}
+              bg={isScrolled ? 'rgba(251, 231, 204, 0.95)' : 'transparent'}
+              borderRadius="50%"
+              w={isOpen ? "135px" : (shrinkLogo ? "70px" : "135px")}
+              h={isOpen ? "135px" : (shrinkLogo ? "60px" : "135px")}
+              transition="all 0.3s ease"
+            />
+            
+            {/* Centered Logo */}
+            <Box
+              position="absolute"
+              left="50%"
+              top={isOpen ? "85%" : (shrinkLogo ? "0%" : "85%")}
+              transform="translate(-50%, -50%)"
+              zIndex={5}
+              transition="all 0.3s ease"
+            >
+              <Link to="/" onClick={() => handleNavigation('/')}> 
+                {logoImage}
+              </Link>
+            </Box>
+
+            {/* Right Navigation Links */}
+            <HStack spacing={4} justify="flex-start" flex={1} pl={{ base: 16, md: 24, lg: 36 }}>
+              {navItems.slice(2).map((item) => (
+                <Link key={item.name} to={item.path} onClick={() => handleNavigation(item.path)}>
+                  <Button
+                    variant="ghost"
+                    color={isActivePage(item.path) ? 'brand.mediumBrown' : (isScrolled ? 'brand.darkBrown' : 'brand.mediumBrown')}
+                    _hover={{
+                      color: 'brand.mediumBrown',
+                      bg: 'rgba(255, 255, 255, 0.1)',
+                    }}
+                    fontWeight={isActivePage(item.path) ? 600 : 500}
+                    fontSize="1rem"
+                    transition="all 0.3s ease"
+                    position="relative"
+                    _after={{
+                      content: '""',
+                      position: 'absolute',
+                      bottom: '-4px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: isActivePage(item.path) ? '100%' : '0%',
+                      height: '2px',
+                      bg: 'brand.mediumBrown',
+                      transition: 'width 0.3s ease',
+                    }}
+                  >
+                    {item.name}
+                  </Button>
+                </Link>
+              ))}
+            </HStack>
+          </Flex>
         )}
 
       </Box>
