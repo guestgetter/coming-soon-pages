@@ -66,6 +66,7 @@ const OurStory: React.FC = () => {
                 willChange: 'transform',
                 transform: 'translateZ(0)', // Force hardware acceleration
               }}
+              bg="brand.cream"
             >
               {/* Sepia-toned overlay */}
               <Box
@@ -83,8 +84,8 @@ const OurStory: React.FC = () => {
                 src="/images/the-jewish-mothers-deli-sign-williamsburg-va.jpg"
                 alt="The Jewish Mother's Deli sign in Williamsburg, VA"
                 w="100%"
-                h={{ base: '300px', md: '400px', lg: '500px' }}
-                objectFit="cover"
+                h={{ base: '380px', md: '500px', lg: '620px' }}
+                objectFit="contain"
                 loading="lazy"
                 decoding="async"
                 fallback={
