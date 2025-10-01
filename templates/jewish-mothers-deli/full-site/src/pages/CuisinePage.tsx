@@ -306,9 +306,9 @@ const CuisinePage: React.FC = () => {
               {menuData.categories.map((category) => (
                 <Button
                   key={category.id}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
+                  as="a"
+                  href={`#category-${category.id}`}
+                  onClick={() => {
                     scrollToCategory(category.id)
                   }}
                   variant="solid"
