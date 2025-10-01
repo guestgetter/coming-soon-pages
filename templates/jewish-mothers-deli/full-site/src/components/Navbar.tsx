@@ -446,6 +446,19 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               position="relative"
               zIndex="1"
             >
+              {/* Centered Logo in mobile menu */}
+              <Box mb={4}>
+                <img
+                  src="/JMD_full_logo.png"
+                  alt="Jewish Mother's Deli Logo"
+                  style={{
+                    maxHeight: '120px',
+                    height: 'auto',
+                    width: 'auto',
+                    objectFit: 'contain',
+                  }}
+                />
+              </Box>
               {/* Navigation Links */}
               <VStack spacing={4} mb="8">
                 {navItems.map((item) => (
