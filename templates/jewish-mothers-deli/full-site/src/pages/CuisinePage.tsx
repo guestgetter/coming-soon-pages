@@ -261,25 +261,7 @@ const CuisinePage: React.FC = () => {
       {/* Section 2: Our Complete Menu - Continuous Scrollable Display */}
       <Box id="complete-menu" py={{ base: 16, md: 20, lg: 24 }} bg="brand.mediumBrown">
         <Container maxW="1400px">
-          {/* Main Header */}
-          <VStack spacing={6} textAlign="center" mb={8}>
-            <Text
-              fontFamily="heading"
-              fontSize={{ base: '2rem', md: '2.5rem', lg: '3rem' }}
-              color="white"
-              fontWeight={600}
-            >
-              Our Complete Menu
-            </Text>
-            <Text
-              fontSize={{ base: '1.1rem', lg: '1.3rem' }}
-              color="rgba(255, 255, 255, 0.9)"
-              maxW="600px"
-              lineHeight={1.6}
-            >
-              Authentic Jewish deli cuisine - browse by category or view all
-            </Text>
-          </VStack>
+          {/* Removed redundant header description per request; keep focus on categories */}
         </Container>
 
         {/* Sticky Category Navigation - Outside Container for better positioning */}

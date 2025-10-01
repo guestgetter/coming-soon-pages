@@ -156,20 +156,7 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
                           {item.price}
                         </Text>
                       )}
-                      {item.isSignature && (
-                        <Badge
-                          bg="rgba(255, 255, 255, 0.2)"
-                          color="white"
-                          fontSize="xs"
-                          px={2}
-                          py={1}
-                          borderRadius="full"
-                          textTransform="uppercase"
-                          letterSpacing="0.5px"
-                        >
-                          Signature
-                        </Badge>
-                      )}
+                      {/* Signature pill removed per request */}
                     </HStack>
 
                     {/* Description */}
