@@ -141,7 +141,7 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
                   }}
                 >
                   <VStack spacing={3} align="stretch">
-                    {/* Item Name with Signature Badge */}
+                    {/* Item Name/Price with Signature Badge */}
                     <HStack justify="space-between" align="center">
                       <Text
                         fontFamily="heading"
@@ -151,6 +151,11 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
                       >
                         {item.name}
                       </Text>
+                      {item.price && (
+                        <Text fontFamily="heading" fontSize="1.1rem" color="rgba(255,255,255,0.9)">
+                          {item.price}
+                        </Text>
+                      )}
                       {item.isSignature && (
                         <Badge
                           bg="rgba(255, 255, 255, 0.2)"

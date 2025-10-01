@@ -5,6 +5,7 @@ export interface MenuItem {
   id: string
   name: string
   description: string
+  price?: string
   ingredients?: string[]
   isSignature?: boolean
   dietary?: string[] // e.g., ['vegetarian', 'dairy-free']
@@ -80,33 +81,38 @@ export const menuData: MenuData = {
         {
           id: 'classic-lox',
           name: 'The Classic Lox',
-          description: 'Our signature lox sandwich',
+          description: 'lox | cream cheese | tomato | red onion | capers',
+          price: '$10',
           ingredients: ['lox', 'cream cheese', 'tomato', 'red onion', 'capers'],
           isSignature: true
         },
         {
           id: 'the-mensch',
           name: 'The Mensch',
-          description: 'A hearty breakfast sandwich',
+          description: 'fried egg | pastrami | american cheese',
+          price: '$8',
           ingredients: ['fried egg', 'pastrami', 'american cheese']
         },
         {
           id: 'deli-breakfast',
           name: 'The Deli Breakfast',
-          description: 'Choose your protein breakfast sandwich',
+          description: 'fried egg | choice of bacon, sausage or pastrami | american cheese',
+          price: '$8',
           ingredients: ['fried egg', 'choice of bacon, sausage or pastrami', 'american cheese']
         },
         {
           id: 'latke-bomb',
           name: 'The Latke Bomb',
-          description: 'Crispy potato latke sandwich',
+          description: 'fried egg | crispy potato latke | american cheese | scallion cream cheese',
+          price: '$9',
           ingredients: ['fried egg', 'crispy potato latke', 'american cheese', 'scallion cream cheese'],
           isSignature: true
         },
         {
           id: 'mediterranean',
           name: 'The Mediterranean',
-          description: 'Fresh Mediterranean flavors',
+          description: 'whipped feta | roasted red peppers | cucumber | baby arugula | tomato | olive oil drizzle',
+          price: '$8',
           ingredients: ['whipped feta', 'roasted red peppers', 'cucumber', 'baby arugula', 'tomato', 'olive oil drizzle'],
           dietary: ['vegetarian']
         }
@@ -121,45 +127,52 @@ export const menuData: MenuData = {
         {
           id: 'hot-pastrami',
           name: 'Hot Pastrami',
-          description: 'House-steamed and hand-sliced',
+          description: 'house-steamed | hand-sliced | deli mustard',
+          price: '8oz $15 / 16oz $28',
           ingredients: ['house-steamed pastrami', 'hand-sliced', 'deli mustard'],
           isSignature: true
         },
         {
           id: 'corned-beef',
           name: 'Corned Beef',
-          description: 'Premium corned beef sandwich',
+          description: 'swiss | sauerkraut | russian dressing | grilled rye',
+          price: '8oz $15 / 16oz $28',
           ingredients: ['choice of pastrami or corned beef', 'swiss cheese', 'sauerkraut', 'russian dressing', 'grilled rye']
         },
         {
           id: 'the-reuben',
           name: 'The Reuben',
-          description: 'Classic deli favorite',
-          ingredients: ['thin-sliced roast beef', 'havarti', 'lettuce', 'tomato', 'caramelized onion mayo'],
+          description: 'corned beef | swiss | sauerkraut | russian dressing | grilled rye',
+          price: '8oz $15 / 16oz $28',
+          ingredients: ['corned beef', 'swiss', 'sauerkraut', 'russian dressing', 'grilled rye'],
           isSignature: true
         },
         {
           id: 'tuna-melt',
           name: 'Tuna Melt',
-          description: 'Grilled tuna and cheese',
+          description: 'albacore tuna salad | American cheese | grilled rye',
+          price: '$12',
           ingredients: ['albacore tuna salad', 'american cheese', 'grilled rye']
         },
         {
           id: 'turkey-club',
           name: 'Turkey Club',
-          description: 'Classic turkey club sandwich',
+          description: 'roasted turkey | lettuce | tomato | American cheese | mayo or mustard | challah',
+          price: '$12',
           ingredients: ['roasted turkey', 'lettuce', 'tomato', 'american cheese', 'challah', 'mayo or mustard']
         },
         {
           id: 'roast-beef-sandwich',
           name: 'Roast Beef Sandwich',
-          description: 'Thin-sliced premium roast beef',
+          description: 'thin-sliced roast beef | havarti | lettuce | tomato | caramelized onion mayo | challah',
+          price: '$12',
           ingredients: ['thin-sliced roast beef', 'havarti', 'lettuce', 'tomato', 'caramelized onion mayo']
         },
         {
           id: 'egg-salad-sandwich',
           name: 'Egg Salad Sandwich',
-          description: 'Classic deli-style egg salad',
+          description: 'classic deli-style egg salad | lettuce | tomato | challah',
+          price: '$11',
           ingredients: ['classic deli-style egg salad', 'lettuce', 'tomato', 'choice of bread'],
           dietary: ['vegetarian']
         }
