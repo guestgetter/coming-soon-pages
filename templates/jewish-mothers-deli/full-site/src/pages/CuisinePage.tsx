@@ -248,9 +248,10 @@ const CuisinePage: React.FC = () => {
               A Modern Jewish Kitchen Deli
             </Text>
             <Text
-              fontSize={{ base: '1.2rem', md: '1.5rem' }}
+              fontSize={{ base: '1.5rem', md: '1.8rem' }}
               color="brand.darkBrown"
-              fontWeight={300}
+              fontWeight={400}
+              sx={{ fontFamily: 'accent' }}
             >
               Traditional flavors. Quick service. Big comfort.
             </Text>

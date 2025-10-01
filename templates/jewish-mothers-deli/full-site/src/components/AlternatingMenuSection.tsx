@@ -170,24 +170,7 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
                       </Text>
                     )}
 
-                    {/* Dietary Indicators */}
-                    {item.dietary && item.dietary.length > 0 && (
-                      <HStack spacing={2}>
-                        {item.dietary.map((diet) => (
-                          <Badge
-                            key={diet}
-                            variant="outline"
-                            colorScheme="green"
-                            fontSize="xs"
-                            textTransform="capitalize"
-                            color="rgba(255, 255, 255, 0.8)"
-                            borderColor="rgba(255, 255, 255, 0.3)"
-                          >
-                            {diet}
-                          </Badge>
-                        ))}
-                      </HStack>
-                    )}
+                    {/* Dietary indicators removed per request */}
                   </VStack>
                 </Box>
                 
