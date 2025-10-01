@@ -40,6 +40,8 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
       spacing={8} 
       w="100%" 
       pt={8}
+      // Ensure anchor scroll positions account for sticky nav height
+      scrollMarginTop={{ base: '160px', md: '200px' }}
       maxW="1200px"
       mx="auto"
     >
