@@ -126,7 +126,7 @@ const ComingSoonPage: React.FC = () => {
           right={0}
           bottom={0}
           zIndex="-1"
-          bg="linear-gradient(135deg, rgba(251, 231, 204, 0.96) 0%, rgba(245, 221, 184, 0.96) 50%, rgba(234, 213, 163, 0.96) 100%)"
+          bg="linear-gradient(135deg, rgba(251, 231, 204, 0.9) 0%, rgba(245, 221, 184, 0.9) 50%, rgba(234, 213, 163, 0.9) 100%)"
         />
         <Container
           maxW="1400px"
@@ -214,12 +214,12 @@ const ComingSoonPage: React.FC = () => {
               }}
             >
               {/* Tagline */}
-              <Text variant="tagline" textAlign="center" fontSize={{ base: '2rem', md: '2.5rem', lg: '3rem' }}>
+              <Text variant="tagline" textAlign="center" fontSize={{ base: '2rem', md: '2.5rem', lg: '3rem' }} textShadow="0 2px 6px rgba(0,0,0,0.2)">
                 "A Taste of Tradition, Served with Love."
               </Text>
 
               {/* Description */}
-              <Text variant="description" textAlign="center" fontSize={{ base: '1.1rem', md: '1.2rem', lg: '1.3rem' }}>
+              <Text variant="description" textAlign="center" fontSize={{ base: '1.1rem', md: '1.2rem', lg: '1.3rem' }} textShadow="0 1px 3px rgba(0,0,0,0.15)">
                 The Jewish Mother's Deli is bringing old-school deli classics, 
                 fresh-baked bagels, stacked sandwiches, and heartfelt hospitality to{' '}
                 <Text as="span" variant="highlight">

@@ -286,7 +286,7 @@ const CuisinePage: React.FC = () => {
         <Box
           position="sticky"
           top={{ base: "60px", md: "100px", lg: "95px" }}
-          zIndex={1000}
+          zIndex={1200}
           bg="brand.mediumBrown"
           py={4}
           mb={8}
@@ -325,6 +325,8 @@ const CuisinePage: React.FC = () => {
                   borderRadius="12px"
                   border="1px solid rgba(255, 255, 255, 0.3)"
                   flexShrink={0}
+                  pointerEvents="auto"
+                  zIndex={1300}
                   _hover={{
                     bg: activeCategory === category.id ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.1)',
                     transform: 'translateY(-2px)',
