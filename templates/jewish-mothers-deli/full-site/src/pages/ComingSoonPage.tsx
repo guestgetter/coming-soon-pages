@@ -126,8 +126,7 @@ const ComingSoonPage: React.FC = () => {
           right={0}
           bottom={0}
           zIndex="-1"
-          bg="linear-gradient(135deg, rgba(251, 231, 204, 0.85) 0%, rgba(245, 221, 184, 0.85) 50%, rgba(234, 213, 163, 0.85) 100%), linear-gradient(to bottom, rgba(111, 62, 19, 0.25) 0%, rgba(111, 62, 19, 0.12) 35%, rgba(111, 62, 19, 0.25) 100%)"
-          mixBlendMode="multiply"
+          bg="linear-gradient(135deg, rgba(251, 231, 204, 0.96) 0%, rgba(245, 221, 184, 0.96) 50%, rgba(234, 213, 163, 0.96) 100%)"
         />
         <Container
           maxW="1400px"
