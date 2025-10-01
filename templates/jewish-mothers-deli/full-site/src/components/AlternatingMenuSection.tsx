@@ -159,23 +159,14 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
                       {/* Signature pill removed per request */}
                     </HStack>
 
-                    {/* Description */}
-                    <Text
-                      fontSize="1rem"
-                      color="rgba(255, 255, 255, 0.8)"
-                      fontStyle="italic"
-                    >
-                      {item.description}
-                    </Text>
-
-                    {/* Ingredients */}
-                    {item.ingredients && item.ingredients.length > 0 && (
+                    {/* One-line details: prefer explicit description; otherwise use ingredients */}
+                    {(item.description || (item.ingredients && item.ingredients.length > 0)) && (
                       <Text
-                        fontSize="0.9rem"
-                        color="rgba(255, 255, 255, 0.7)"
-                        lineHeight={1.4}
+                        fontSize="1rem"
+                        color="rgba(255, 255, 255, 0.85)"
+                        fontStyle="italic"
                       >
-                        {item.ingredients.join(' | ')}
+                        {item.description || item.ingredients?.join(' | ')}
                       </Text>
                     )}
 
