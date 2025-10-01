@@ -1,5 +1,5 @@
 # Deployment Guide
-
+Trigger redeploy: updated at $(date)
 ## Issues Fixed
 
 ### 1. CSS MIME Type Error
