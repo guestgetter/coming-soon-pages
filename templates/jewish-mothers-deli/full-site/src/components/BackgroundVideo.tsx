@@ -69,7 +69,8 @@ const BackgroundVideo: React.FC<BackgroundVideoProps> = ({ src, poster }) => {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          filter: 'brightness(0.9)',
+          // Dim, slightly desaturate, and very lightly blur to keep UI legible
+          filter: 'brightness(0.7) saturate(0.85) blur(1px)',
           transform: 'translateZ(0)',
           opacity: isLoaded ? 1 : 0,
           transition: 'opacity 600ms ease',
