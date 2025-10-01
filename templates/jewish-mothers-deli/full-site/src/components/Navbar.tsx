@@ -77,6 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
     { name: 'Home', path: '/' },
     { name: 'Menu', path: '/menu' },
     { name: 'About', path: '/about' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ], [])
 
