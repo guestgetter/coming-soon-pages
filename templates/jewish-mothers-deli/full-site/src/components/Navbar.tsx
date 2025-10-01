@@ -188,7 +188,8 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
     
     // Mobile logo sizing
     if (isMobile) {
-      maxHeight = '160px'; // reduce to avoid cramped look
+      // Slightly smaller on mobile to avoid overflow/clipping
+      maxHeight = '150px';
       if (shrinkLogo) {
         maxHeight = '120px';
         baseScale = 0.8;
@@ -274,7 +275,8 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         maxW="1400px"
         mx="auto"
         position="relative"
-        minH={{ base: '130px', md: '180px', lg: '240px' }}
+        // Provide enough vertical space so the logo never clips
+        minH={{ base: '160px', md: '180px', lg: '240px' }}
         zIndex={2}
       >
         {/* Mobile Layout */}
@@ -361,7 +363,8 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               <Box 
                 position="absolute" 
                 left="50%" 
-                top={shrinkLogo ? '55%' : '70%'}
+                // Center the logo better on mobile to prevent bottom clipping
+                top={shrinkLogo ? '55%' : '58%'}
                 transform="translate(-50%, -50%)"
                 zIndex={5}
                 transition="all 0.3s ease"
