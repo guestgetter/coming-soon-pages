@@ -80,8 +80,8 @@ const OurStory: React.FC = () => {
               />
               
               <Image
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=700&fit=crop&crop=center"
-                alt="Jewish Mother's Deli Interior"
+                src="/images/the-jewish-mothers-deli-sign-williamsburg-va.jpg"
+                alt="The Jewish Mother's Deli sign in Williamsburg, VA"
                 w="100%"
                 h={{ base: '300px', md: '400px', lg: '500px' }}
                 objectFit="cover"
