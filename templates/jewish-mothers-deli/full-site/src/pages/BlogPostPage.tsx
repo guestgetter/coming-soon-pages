@@ -24,13 +24,13 @@ const BlogPostPage: React.FC = () => {
   return (
     <Box>
       <Navbar />
-      <Box pt={{ base: 36, md: 40 }} px={{ base: 4, md: 8 }} maxW="960px" mx="auto">
-        <Heading as="h1" size="2xl" mb={3} color="brand.darkBrown">{post.title}</Heading>
-        <Text fontSize="sm" color="brand.lightBrown" mb={6}>{new Date(post.date).toLocaleDateString()} • {post.author}</Text>
-        <Image src={post.heroImage} alt={post.title} w="100%" mb={8} borderRadius="md" />
-        <VStack align="stretch" spacing={4}>
+      <Box pt={{ base: 40, md: 48 }} pb={{ base: 16, md: 24 }} px={{ base: 4, md: 8 }} maxW="860px" mx="auto">
+        <Heading as="h1" size="2xl" mb={4} color="brand.darkBrown" lineHeight={1.2}>{post.title}</Heading>
+        <Text fontSize="sm" color="brand.lightBrown" mb={8}>{new Date(post.date).toLocaleDateString()} • {post.author}</Text>
+        <Image src={post.heroImage} alt={post.title} w="100%" mb={10} borderRadius="lg" boxShadow="md" />
+        <VStack align="stretch" spacing={6}>
           {post.content.map((para, idx) => (
-            <Text key={idx} color="brand.mediumBrown" fontSize="lg" lineHeight={1.8}>{para}</Text>
+            <Text key={idx} color="brand.mediumBrown" fontSize={{ base: 'lg', md: 'xl' }} lineHeight={2}>{para}</Text>
           ))}
         </VStack>
       </Box>
