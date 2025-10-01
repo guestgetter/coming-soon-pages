@@ -550,7 +550,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                     window.open('tel:+17575551234', '_self');
                   }}
                 >
-                  (757) 555-1234
+                  <span style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1.3rem' }}>
+                    A Modern Jewish Kitchen Deli
+                  </span>
                 </Button>
                 <Box
                   fontSize="sm"

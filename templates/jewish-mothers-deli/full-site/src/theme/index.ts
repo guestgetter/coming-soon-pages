@@ -10,6 +10,7 @@ const theme = extendTheme({
   fonts: {
     heading: "'Playfair Display', serif",
     body: "'Inter', sans-serif",
+    accent: "'Dancing Script', cursive",
   },
   colors: {
     brand: {

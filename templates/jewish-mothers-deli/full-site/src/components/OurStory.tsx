@@ -235,6 +235,7 @@ const OurStory: React.FC = () => {
                 fontSize="1.1rem"
                 color="brand.mediumBrown"
                 fontStyle="italic"
+                sx={{ fontFamily: 'accent' }}
               >
                 — Sid & Family
               </Text>
