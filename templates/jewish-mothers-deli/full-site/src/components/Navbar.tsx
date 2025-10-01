@@ -304,8 +304,8 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         {!isMobile && (
           <Flex align="center" justify="space-between" position="relative" zIndex={3}>
             {/* Left Navigation Links */}
-            <HStack spacing={4} justify="flex-end" flex={1} pr={{ base: 16, md: 24, lg: 36 }}>
-              {navItems.slice(0, 2).map((item) => (
+            <HStack spacing={6} justify="flex-end" flex={1} pr={{ base: 16, md: 24, lg: 36 }}>
+              {navItems.slice(0, 3).map((item) => (
                 <Link key={item.name} to={item.path} onClick={() => handleNavigation(item.path)}>
                   <Button
                     variant="ghost"
@@ -359,14 +359,14 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               zIndex={5}
               transition="all 0.3s ease"
             >
-              <Link to="/" onClick={() => handleNavigation('/')}> 
+              <Link to="/" onClick={() => handleNavigation('/')}>
                 {logoImage}
               </Link>
             </Box>
 
             {/* Right Navigation Links */}
-            <HStack spacing={4} justify="flex-start" flex={1} pl={{ base: 16, md: 24, lg: 36 }}>
-              {navItems.slice(2).map((item) => (
+            <HStack spacing={6} justify="flex-start" flex={1} pl={{ base: 16, md: 24, lg: 36 }}>
+              {navItems.slice(3).map((item) => (
                 <Link key={item.name} to={item.path} onClick={() => handleNavigation(item.path)}>
                   <Button
                     variant="ghost"
@@ -395,6 +395,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                   </Button>
                 </Link>
               ))}
+              {/* ORDER button on far right */}
+              <Button
+                variant="primary"
+                onClick={() => {
+                  window.open('tel:+17575551234', '_self')
+                }}
+              >
+                ORDER
+              </Button>
             </HStack>
           </Flex>
         )}
