@@ -120,6 +120,17 @@ const ComingSoonPage: React.FC = () => {
         />
         {/* Background Video (lazy-loaded, muted, performant) */}
         <BackgroundVideo src="/images/jmd-video-bg.mp4" poster="/images/jewish-mothers-deli-williamsburg-virginia.jpg" />
+        {/* Brand color overlay to ensure text readability over video */}
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          zIndex="-1"
+          bg="linear-gradient(135deg, rgba(251, 231, 204, 0.72) 0%, rgba(245, 221, 184, 0.72) 50%, rgba(234, 213, 163, 0.72) 100%)"
+          mixBlendMode="multiply"
+        />
         <Container
           maxW="1400px"
           h="100%"
