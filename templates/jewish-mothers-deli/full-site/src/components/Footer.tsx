@@ -95,13 +95,13 @@ const Footer: React.FC = () => {
               </Text>
               
               <Text
-                fontSize="1.1rem"
-                color="rgba(255, 255, 255, 0.8)"
+                fontSize="1.4rem"
+                color="rgba(255, 255, 255, 0.9)"
                 lineHeight={1.6}
-                fontWeight={300}
+                fontWeight={400}
+                sx={{ fontFamily: 'accent' }}
               >
-                A Taste of Tradition, Served with Love. Bringing authentic Jewish deli cuisine 
-                and heartfelt hospitality to Williamsburg.
+                Traditional flavors. Quick service. Big comfort.
               </Text>
             </VStack>
 
