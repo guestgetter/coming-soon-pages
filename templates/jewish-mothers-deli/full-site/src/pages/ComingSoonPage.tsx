@@ -16,6 +16,7 @@ import {
 import { CalendarIcon, ViewIcon } from '@chakra-ui/icons'
 
 import BackgroundPatterns from '../components/BackgroundPatterns'
+import BackgroundVideo from '../components/BackgroundVideo'
 
 import OurStory from '../components/OurStory'
 import CateringForm from '../components/ReservationsForm'
@@ -117,6 +118,8 @@ const ComingSoonPage: React.FC = () => {
           bg="linear-gradient(135deg, rgba(111, 62, 19, 0.08) 0%, rgba(138, 84, 46, 0.03) 100%)"
           zIndex="-1"
         />
+        {/* Background Video (lazy-loaded, muted, performant) */}
+        <BackgroundVideo src="/images/jmd-video-bg.mp4" poster="/images/jewish-mothers-deli-williamsburg-virginia.jpg" />
         <Container
           maxW="1400px"
           h="100%"
