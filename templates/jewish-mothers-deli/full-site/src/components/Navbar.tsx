@@ -7,7 +7,6 @@ import {
   VStack,
   useDisclosure,
   Collapse,
-  Flex,
   IconButton,
 } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'

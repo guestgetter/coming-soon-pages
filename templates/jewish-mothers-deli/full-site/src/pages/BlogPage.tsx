@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Heading, Text, VStack, Image, LinkBox, LinkOverlay, Stack, HStack, Divider } from '@chakra-ui/react'
+import { Box, Heading, Text, VStack, Image, LinkBox, LinkOverlay, Stack, HStack } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { getPosts } from '../data/posts'
