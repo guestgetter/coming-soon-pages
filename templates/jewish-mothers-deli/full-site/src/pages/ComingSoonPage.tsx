@@ -7,8 +7,6 @@ import {
   Image,
   Text,
   VStack,
-  Grid,
-  GridItem,
   HStack,
   Button,
   useBreakpointValue,
