@@ -16,9 +16,9 @@ import { Link as RouterLink } from 'react-router-dom'
 const OurStory: React.FC = () => {
   const direction = useBreakpointValue({ base: 'column', lg: 'row' }) || 'column'
   const blogPost = getPostBySlug('why-the-jewish-mothers-deli')
-  const storyParagraphs = blogPost
-    ? blogPost.content.filter(p => !/^hi friends/i.test(p)).slice(0, 3)
-    : []
+  const storyTeaser = blogPost
+    ? blogPost.content.filter(p => !/^hi friends/i.test(p))[0]?.slice(0, 220) + '…'
+    : undefined
 
   return (
     <Box
@@ -92,7 +92,8 @@ const OurStory: React.FC = () => {
                 alt="The Jewish Mother's Deli sign in Williamsburg, VA"
                 w="100%"
                 h={{ base: '380px', md: '500px', lg: '620px' }}
-                objectFit="contain"
+                objectFit="cover"
+                objectPosition="center"
                 loading="lazy"
                 decoding="async"
                 fallback={
@@ -197,24 +198,17 @@ const OurStory: React.FC = () => {
               borderRadius="1px"
             />
 
-            {/* Sans-serif description from blog */}
+            {/* Blog teaser */}
             <VStack spacing={4} align={{ base: 'center', lg: 'flex-start' }}>
-              {(storyParagraphs.length ? storyParagraphs : [
-                "We’re bringing something back to Williamsburg that’s built on the foundation of family, tradition, and a lot of love.",
-                "The Jewish Mother’s Deli is a tribute to the women who raised us — a space where comfort, honesty, and love sit at the center of it all.",
-                "We can’t wait to welcome you in."
-              ]).map((para, idx) => (
-                <Text
-                  key={idx}
-                  fontSize={{ base: '1.1rem', lg: '1.2rem' }}
-                  color="brand.lightBrown"
-                  lineHeight={1.7}
-                  fontWeight={300}
-                  maxW="500px"
-                >
-                  {para}
-                </Text>
-              ))}
+              <Text
+                fontSize={{ base: '1.1rem', lg: '1.2rem' }}
+                color="brand.lightBrown"
+                lineHeight={1.7}
+                fontWeight={300}
+                maxW="560px"
+              >
+                {storyTeaser || "A new deli for Williamsburg — rooted in family, tradition, and a lot of love."}
+              </Text>
 
               {blogPost && (
                 <Button
