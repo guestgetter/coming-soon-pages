@@ -1,5 +1,5 @@
 # Deployment Guide
-Trigger redeploy: another update
+Trigger redeploy: good-state preview trigger
 ## Issues Fixed
 
 ### 1. CSS MIME Type Error
