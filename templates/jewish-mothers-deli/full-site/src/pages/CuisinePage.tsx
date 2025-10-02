@@ -268,8 +268,8 @@ const CuisinePage: React.FC = () => {
         {/* Sticky Category Navigation - Outside Container for better positioning */}
         <Box
           position="sticky"
-          top={{ base: "60px", md: "100px", lg: "95px" }}
-          zIndex={5000}
+          top={{ base: "140px", md: "120px", lg: "95px" }}
+          zIndex={1200}
           pointerEvents="auto"
           bg="brand.mediumBrown"
           py={4}

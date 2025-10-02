@@ -6,7 +6,6 @@ import {
   VStack,
   HStack,
   Text,
-  Badge,
   useBreakpointValue,
 } from '@chakra-ui/react'
 import { MenuCategory } from '../data/menuData'
