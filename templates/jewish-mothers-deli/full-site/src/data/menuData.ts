@@ -67,15 +67,15 @@ export const menuData: MenuData = {
         {
           id: 'deli-breakfast',
           name: 'The Deli Breakfast',
-          description: 'fried egg | choice of bacon, sausage or pastrami | american cheese',
+          description: 'fried egg | choice of bacon | sausage or pastrami with american cheese',
           price: '$8',
-          ingredients: ['fried egg', 'choice of bacon, sausage or pastrami', 'american cheese']
+          ingredients: ['fried egg', 'choice of bacon | sausage or pastrami', 'american cheese']
         },
         {
           id: 'latke-bomb',
           name: 'The Latke Bomb',
           description: 'fried egg | crispy potato latke | american cheese | scallion cream cheese',
-          price: '$9',
+          price: '$8',
           ingredients: ['fried egg', 'crispy potato latke', 'american cheese', 'scallion cream cheese'],
           isSignature: true
         },
@@ -85,14 +85,6 @@ export const menuData: MenuData = {
           description: 'prosciutto | whipped feta | roasted red peppers | cucumber | baby arugula | tomato | olive oil drizzle',
           price: '$10',
           ingredients: ['prosciutto', 'whipped feta', 'roasted red peppers', 'cucumber', 'baby arugula', 'tomato', 'olive oil drizzle']
-        },
-        {
-          id: 'mediterranean',
-          name: 'The Mediterranean',
-          description: 'whipped feta | roasted red peppers | cucumber | baby arugula | tomato | olive oil drizzle',
-          price: '$8',
-          ingredients: ['whipped feta', 'roasted red peppers', 'cucumber', 'baby arugula', 'tomato', 'olive oil drizzle'],
-          dietary: ['vegetarian']
         }
       ]
     },
