@@ -16,9 +16,28 @@ import { Link as RouterLink } from 'react-router-dom'
 const OurStory: React.FC = () => {
   const direction = useBreakpointValue({ base: 'column', lg: 'row' }) || 'column'
   const blogPost = getPostBySlug('why-the-jewish-mothers-deli')
-  const storyTeaser = blogPost
-    ? blogPost.content.filter(p => !/^hi friends/i.test(p))[0]?.slice(0, 220) + '…'
-    : undefined
+  // Build a short, complete-sentence teaser (no hard ellipsis mid‑sentence)
+  const buildTeaser = (): string | undefined => {
+    if (!blogPost) return undefined
+    const paras = blogPost.content.filter(p => p && !/^hi friends/i.test(p))
+    if (paras.length === 0) return undefined
+    const maxLen = 280
+    let acc = ''
+    for (const p of paras) {
+      const candidate = (acc + (acc ? ' ' : '') + p).trim()
+      if (candidate.length > maxLen) break
+      acc = candidate
+      if (acc.length >= 160) break // good length already
+    }
+    // Trim to the last sentence end if possible
+    const match = acc.match(/([\.!?])[^\.!?]*$/)
+    if (match) {
+      const endIndex = acc.lastIndexOf(match[1])
+      if (endIndex !== -1) return acc.slice(0, endIndex + 1)
+    }
+    return acc
+  }
+  const storyTeaser = buildTeaser()
 
   return (
     <Box
@@ -93,7 +112,7 @@ const OurStory: React.FC = () => {
                 w="100%"
                 h={{ base: '380px', md: '500px', lg: '620px' }}
                 objectFit="cover"
-                objectPosition="center"
+                objectPosition="left center"
                 loading="lazy"
                 decoding="async"
                 fallback={
