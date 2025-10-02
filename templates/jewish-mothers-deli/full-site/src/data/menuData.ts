@@ -29,48 +29,19 @@ export const menuData: MenuData = {
     {
       id: 'bagels-schmears',
       name: 'BAGELS & SCHMEARS',
-      description: 'Fresh-baked bagels with artisanal spreads',
+      description: 'Bagel options: $2.49 for plain and $2.99 for flavored. Spreads: $1.00 for plain and $1.50 for flavored.',
       options: ['Plain', 'Everything', 'Sesame', 'Onion', 'Poppy', 'Cinnamon Raisin'],
       items: [
-        {
-          id: 'plain-cream-cheese',
-          name: 'Plain Cream Cheese',
-          description: 'Classic smooth and creamy spread',
-          ingredients: ['cream cheese']
-        },
-        {
-          id: 'scallion-cream-cheese',
-          name: 'Scallion Cream Cheese',
-          description: 'Fresh scallions mixed with cream cheese',
-          ingredients: ['cream cheese', 'fresh scallions']
-        },
-        {
-          id: 'lox-spread',
-          name: 'Lox Spread',
-          description: 'Premium smoked salmon spread',
-          ingredients: ['smoked salmon', 'cream cheese', 'capers', 'dill'],
-          isSignature: true
-        },
-        {
-          id: 'veggie-cream-cheese',
-          name: 'Veggie Cream Cheese',
-          description: 'Garden vegetables mixed with cream cheese',
-          ingredients: ['cream cheese', 'cucumber', 'tomato', 'red onion', 'herbs'],
-          dietary: ['vegetarian']
-        },
-        {
-          id: 'whitefish-salad',
-          name: 'Whitefish Salad',
-          description: 'Traditional Jewish deli whitefish salad',
-          ingredients: ['smoked whitefish', 'celery', 'onion', 'mayo']
-        },
-        {
-          id: 'honey-walnut-cream-cheese',
-          name: 'Honey Walnut Cream Cheese',
-          description: 'Sweet and crunchy artisanal spread',
-          ingredients: ['cream cheese', 'honey', 'toasted walnuts'],
-          dietary: ['vegetarian']
-        }
+        { id: 'spread-plain', name: 'Plain', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-scallion', name: 'Scallion', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-tripple-onion', name: 'Tripple Onion', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-garlic-herb', name: 'Garlic & Herb', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-vegetable', name: 'Vegetable', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-honey-pecan', name: 'Honey Pecan', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-horseradish-cheddar', name: 'Horseradish & Cheddar', description: '' },
+        { id: 'spread-jalapeno', name: 'Jalapeno', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-raisin-apple-cinnamon', name: 'Raisin, Apple, & Cinnamon', description: '', dietary: ['vegetarian'] },
+        { id: 'spread-whitefish-salad', name: 'Whitefish Salad', description: '' }
       ]
     },
     {
@@ -109,6 +80,13 @@ export const menuData: MenuData = {
           isSignature: true
         },
         {
+          id: 'the-shiksa-italiano',
+          name: 'The Shiksa Italiano',
+          description: 'prosciutto | whipped feta | roasted red peppers | cucumber | baby arugula | tomato | olive oil drizzle',
+          price: '$10',
+          ingredients: ['prosciutto', 'whipped feta', 'roasted red peppers', 'cucumber', 'baby arugula', 'tomato', 'olive oil drizzle']
+        },
+        {
           id: 'mediterranean',
           name: 'The Mediterranean',
           description: 'whipped feta | roasted red peppers | cucumber | baby arugula | tomato | olive oil drizzle',
@@ -132,13 +110,7 @@ export const menuData: MenuData = {
           ingredients: ['house-steamed pastrami', 'hand-sliced', 'deli mustard'],
           isSignature: true
         },
-        {
-          id: 'corned-beef',
-          name: 'Corned Beef',
-          description: 'swiss | sauerkraut | russian dressing | grilled rye',
-          price: '8oz $15 / 16oz $28',
-          ingredients: ['choice of pastrami or corned beef', 'swiss cheese', 'sauerkraut', 'russian dressing', 'grilled rye']
-        },
+        
         {
           id: 'the-reuben',
           name: 'The Reuben',
@@ -184,39 +156,38 @@ export const menuData: MenuData = {
       description: 'Traditional Jewish deli soups and sides',
       items: [
         {
-          id: 'matzo-ball-soup',
-          name: 'Matzo Ball Soup',
-          description: 'Grandma\'s recipe with fluffy matzo balls',
-          ingredients: ['matzo balls', 'rich chicken broth', 'fresh dill'],
+          id: 'matzah-ball-soup',
+          name: 'Matzah Ball Soup',
+          description: '',
+          ingredients: [],
           isSignature: true
+        },
+        {
+          id: 'latkes',
+          name: 'Latkes (with sour cream or applesauce)',
+          description: '',
+          ingredients: [],
+          dietary: ['vegetarian']
         },
         {
           id: 'potato-salad',
           name: 'Potato Salad',
-          description: 'Traditional deli-style potato salad',
-          ingredients: ['yukon potatoes', 'celery', 'onion', 'mayo', 'herbs'],
+          description: '',
+          ingredients: [],
           dietary: ['vegetarian']
         },
         {
-          id: 'coleslaw',
-          name: 'Coleslaw',
-          description: 'Fresh and tangy coleslaw',
-          ingredients: ['cabbage', 'carrots', 'creamy dressing'],
-          dietary: ['vegetarian']
-        },
-        {
-          id: 'pickles',
-          name: 'Deli Pickles',
-          description: 'House-made kosher dill pickles',
-          ingredients: ['cucumbers', 'dill', 'garlic', 'spices'],
+          id: 'house-pickle',
+          name: 'House Pickle',
+          description: '',
+          ingredients: [],
           dietary: ['vegetarian', 'vegan']
         },
         {
-          id: 'potato-latkes',
-          name: 'Potato Latkes',
-          description: 'Crispy potato pancakes with applesauce',
-          ingredients: ['grated potatoes', 'onion', 'applesauce', 'sour cream'],
-          dietary: ['vegetarian']
+          id: 'chips',
+          name: 'Chips',
+          description: '',
+          ingredients: []
         }
       ]
     },
@@ -225,41 +196,11 @@ export const menuData: MenuData = {
       name: 'BAKED GOODS & DESSERTS',
       description: 'Traditional Jewish bakery items and desserts',
       items: [
-        {
-          id: 'rugelach',
-          name: 'Rugelach',
-          description: 'Traditional Jewish pastry with cinnamon and nuts',
-          ingredients: ['cream cheese dough', 'cinnamon', 'walnuts', 'raisins'],
-          dietary: ['vegetarian']
-        },
-        {
-          id: 'chocolate-babka',
-          name: 'Chocolate Babka',
-          description: 'Rich chocolate swirl bread',
-          ingredients: ['brioche dough', 'chocolate filling', 'streusel topping'],
-          dietary: ['vegetarian']
-        },
-        {
-          id: 'black-white-cookies',
-          name: 'Black & White Cookies',
-          description: 'Classic NYC bakery cookies',
-          ingredients: ['vanilla cake cookie', 'chocolate fondant', 'vanilla fondant'],
-          dietary: ['vegetarian']
-        },
-        {
-          id: 'ny-cheesecake',
-          name: 'New York Cheesecake',
-          description: 'Rich and creamy NY-style cheesecake',
-          ingredients: ['cream cheese', 'graham cracker crust', 'berry compote'],
-          dietary: ['vegetarian']
-        },
-        {
-          id: 'challah-bread',
-          name: 'Challah Bread',
-          description: 'Traditional braided egg bread',
-          ingredients: ['eggs', 'honey', 'sesame seeds'],
-          dietary: ['vegetarian']
-        }
+        { id: 'black-white-cookies', name: 'Black & White Cookies', description: '', dietary: ['vegetarian'] },
+        { id: 'chocolate-rugelach', name: 'Chocolate Rugelach', description: '', dietary: ['vegetarian'] },
+        { id: 'cinnamon-babka', name: 'Cinnamon Babka', description: '', dietary: ['vegetarian'] },
+        { id: 'chocolate-cake', name: 'Chocolate Cake', description: '', dietary: ['vegetarian'] },
+        { id: 'rainbow-cake', name: 'Rainbow Cake', description: '', dietary: ['vegetarian'] }
       ]
     }
   ]
