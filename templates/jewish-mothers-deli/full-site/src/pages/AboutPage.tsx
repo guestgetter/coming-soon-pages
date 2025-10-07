@@ -21,38 +21,6 @@ const AboutPage: React.FC = () => {
 
 
 
-  const timelineEvents = [
-    {
-      year: '1923',
-      title: 'The Beginning in Brooklyn',
-      description: 'Sarah Cohen, our founder\'s grandmother, opens her first kitchen in a small apartment in Brooklyn, serving traditional Jewish dishes to neighbors and friends.',
-      image: '/history_images/1_optimized.jpg'
-    },
-    {
-      year: '1948',
-      title: 'The Deli Tradition Begins',
-      description: 'Sarah\'s daughter, Ruth, takes over the kitchen and transforms it into a small deli, introducing the famous pastrami recipe that would become our signature.',
-      image: '/history_images/2_optimized.jpg'
-    },
-    {
-      year: '1972',
-      title: 'Expansion to Manhattan',
-      description: 'Ruth\'s son, David, expands the business to Manhattan, bringing authentic Jewish deli cuisine to a wider audience and earning critical acclaim.',
-      image: '/history_images/3_optimized.jpg'
-    },
-    {
-      year: '1998',
-      title: 'The Next Generation',
-      description: 'David\'s daughter, Rachel, modernizes the recipes while preserving tradition, introducing new techniques while honoring the family\'s culinary heritage.',
-      image: '/history_images/4.webp'
-    },
-    {
-      year: '2024',
-      title: 'Coming to Williamsburg',
-      description: 'Now, Rachel\'s children are bringing the Jewish Mother\'s Deli to Williamsburg, Virginia, continuing the legacy of love, tradition, and exceptional food.',
-      image: '/history_images/5.webp'
-    }
-  ]
 
   // Optimized card component with better performance
 
@@ -285,18 +253,19 @@ const AboutPage: React.FC = () => {
               fontSize={{ base: '1.2rem', md: '1.5rem' }}
               color="brand.darkBrown"
               fontWeight={300}
-              maxW="600px"
+              maxW="800px"
+              lineHeight={1.6}
             >
-              A century of tradition, love, and the most delicious Jewish deli cuisine
+              A tribute to family, tradition, and the women who shaped us
             </Text>
           </VStack>
         </Container>
       </Box>
 
-      {/* Section 1: Story Timeline - Vertical timeline component as specified */}
+      {/* Section 1: Sid's Story */}
       <Box py={{ base: 16, md: 20, lg: 24 }} bg="brand.mediumBrown">
-        <Container maxW="1400px">
-          <VStack spacing={12}>
+        <Container maxW="1000px">
+          <VStack spacing={8}>
             <VStack spacing={6} textAlign="center">
               <Text
                 fontFamily="heading"
@@ -304,149 +273,76 @@ const AboutPage: React.FC = () => {
                 color="white"
                 fontWeight={600}
               >
-                Our Journey Through Time
+                Why The Jewish Mother's Deli
               </Text>
               <Text
-                fontSize={{ base: '1.1rem', lg: '1.3rem' }}
+                fontSize={{ base: '1rem', lg: '1.1rem' }}
                 color="brand.cream"
-                maxW="600px"
-                lineHeight={1.6}
+                fontStyle="italic"
               >
-                From a small Brooklyn kitchen to Williamsburg, Virginia - our story spans generations
+                A personal note from Sid Hall
               </Text>
             </VStack>
-
-            {/* Vertical Timeline Component */}
-            <Box w="100%" maxW="1200px" position="relative">
-              {/* Timeline Line */}
-              <Box
-                position="absolute"
-                left={{ base: '10%', lg: '50%' }}
-                top={0}
-                bottom={0}
-                w="4px"
-                bg="white"
-                transform="translateX(-50%)"
-                zIndex={1}
-                borderRadius="2px"
-              />
-
-              <VStack spacing={0} align="stretch">
-                {timelineEvents.map((event, index) => (
-                  <Box key={index} position="relative" py={{ base: 12, lg: 16 }}>
-                    {/* Timeline Dot */}
-                    <Box
-                      position="absolute"
-                      left={{ base: '10%', lg: '50%' }}
-                      top="50%"
-                      w="24px"
-                      h="24px"
-                      bg="brand.mediumBrown"
-                      borderRadius="50%"
-                      border="5px solid white"
-                      boxShadow="0 0 25px rgba(138, 84, 46, 0.5), 0 4px 15px rgba(0, 0, 0, 0.1)"
-                      transform="translate(-50%, -50%)"
-                      zIndex={10}
-                    />
-
-                    {/* Content Container */}
-                    <Flex
-                      direction={{ base: 'column', lg: 'row' }}
-                      align="center"
-                      justify="center"
-                      gap={{ base: 6, lg: 12 }}
-                      position="relative"
-                      zIndex={2}
-                    >
-                      {/* Left Content - Year and Title */}
-                      <Box
-                        flex="1"
-                        maxW={{ base: '100%', lg: '360px' }}
-                        textAlign={{ base: 'left', lg: 'right' }}
-                        order={{ base: 1, lg: 1 }}
-                        pr={{ base: 0, lg: 12 }}
-                        mt={{ base: 4, lg: 0 }}
-                      >
-                        <VStack spacing={3} align={{ base: 'center', lg: 'flex-end' }}>
-                          <Text
-                            fontFamily="heading"
-                            fontSize={{ base: '2.5rem', lg: '3.5rem' }}
-                            color="white"
-                            fontWeight={600}
-                            lineHeight={1}
-                            textShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
-                          >
-                            {event.year}
-                          </Text>
-                          
-                          <Text
-                            fontFamily="heading"
-                            fontSize={{ base: '1.3rem', lg: '1.6rem' }}
-                            color="brand.cream"
-                            fontWeight={600}
-                            lineHeight={1.2}
-                            maxW="320px"
-                          >
-                            {event.title}
-                          </Text>
-                        </VStack>
-                      </Box>
-
-                      {/* Center Spacer for Mobile */}
-                      <Box 
-                        display={{ base: 'none', lg: 'none' }}
-                      />
-
-                      {/* Right Content - Description and Image */}
-                      <Box
-                        flex="1"
-                        maxW={{ base: '100%', lg: '440px' }}
-                        textAlign={{ base: 'left', lg: 'left' }}
-                        order={{ base: 3, lg: 2 }}
-                        pl={{ base: 0, lg: 12 }}
-                        mt={{ base: 4, lg: 0 }}
-                      >
-                        <VStack spacing={4} align={{ base: 'center', lg: 'flex-start' }}>
-                          <Text
-                            fontSize={{ base: '1rem', lg: '1.1rem' }}
-                            color="brand.cream"
-                            lineHeight={1.6}
-                            fontWeight={300}
-                            maxW="380px"
-                          >
-                            {event.description}
-                          </Text>
-
-                          {/* Image */}
-                          <Box
-                            w={{ base: '200px', lg: '240px' }}
-                            h={{ base: '130px', lg: '160px' }}
-                            borderRadius="16px"
-                            overflow="hidden"
-                            boxShadow="0 15px 35px rgba(0, 0, 0, 0.15)"
-                            transition="all 0.3s ease"
-                            border="2px solid white"
-                            _hover={{
-                              transform: 'scale(1.05)',
-                              boxShadow: '0 20px 40px rgba(138, 84, 46, 0.25)',
-                            }}
-                          >
-                            <ImageWithFallback
-                              src={event.image}
-                              alt={event.title}
-                              w="100%"
-                              h="100%"
-                              objectFit="cover"
-                              fallbackText={event.year}
-                            />
-                          </Box>
-                        </VStack>
-                      </Box>
-                    </Flex>
-                  </Box>
-                ))}
-              </VStack>
-            </Box>
+            
+            <VStack spacing={6} align="stretch" w="100%">
+              <Text
+                fontSize={{ base: '1.05rem', lg: '1.15rem' }}
+                color="brand.cream"
+                lineHeight={1.8}
+                fontWeight={300}
+              >
+                I can't put into words how meaningful it is for me to bring The Jewish Mother's Deli to Williamsburg — my hometown. This town shaped who I am, and now I get to bring something back that's built on the foundation of family, tradition, and a lot of love.
+              </Text>
+              
+              <Text
+                fontSize={{ base: '1.05rem', lg: '1.15rem' }}
+                color="brand.cream"
+                lineHeight={1.8}
+                fontWeight={300}
+              >
+                The name The Jewish Mother's Deli is more than a clever nod — it's a tribute. A tribute to the women who raised me, shaped me, and in many ways defined the kind of person I strive to be. My mother, Norma, who has always been my biggest supporter and fiercest critic, often in the same breath. My grandmothers, Jewel and Joanne — and while Joanne isn't Jewish, she is every bit my grandmother and every bit of the strong motherly presence I want to honor here.
+              </Text>
+              
+              <Text
+                fontSize={{ base: '1.05rem', lg: '1.15rem' }}
+                color="brand.cream"
+                lineHeight={1.8}
+                fontWeight={300}
+              >
+                To me, that's what "the Jewish mother" really represents. She's the one who shows up when you need her most, no questions asked. She's the one who tells you the truth even when you don't want to hear it — because she loves you enough to say it. She's the one who insists you eat, again and again and again, because feeding you is her way of taking care of you.
+              </Text>
+              
+              <Text
+                fontSize={{ base: '1.05rem', lg: '1.15rem' }}
+                color="brand.cream"
+                lineHeight={1.8}
+                fontWeight={300}
+              >
+                That spirit is what I want to capture with this deli. It's not just about bagels, schmears, pastrami, and whitefish (though of course there will be plenty of those). It's about creating a space that feels like the embrace of family. A place where tradition and comfort meet, where there's laughter, honesty, and maybe even a little guilt — but always with love at the center of it all.
+              </Text>
+              
+              <Text
+                fontSize={{ base: '1.15rem', lg: '1.25rem' }}
+                color="white"
+                lineHeight={1.8}
+                fontWeight={400}
+                fontStyle="italic"
+                textAlign="center"
+                pt={4}
+              >
+                From my family to yours — here's to strong mothers, strong community, and all the Manischewitz your heart desires.
+              </Text>
+              
+              <Text
+                fontSize={{ base: '1.1rem', lg: '1.2rem' }}
+                color="brand.cream"
+                textAlign="right"
+                fontWeight={400}
+                pt={2}
+              >
+                — Sid Hall
+              </Text>
+            </VStack>
           </VStack>
         </Container>
       </Box>
