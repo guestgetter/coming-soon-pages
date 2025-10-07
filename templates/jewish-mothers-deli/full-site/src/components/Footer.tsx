@@ -31,7 +31,6 @@ const Footer: React.FC = () => {
       items: [
         { label: 'Our Menu', href: '/menu', isExternal: false, icon: undefined },
         { label: 'About Us', href: '/about', isExternal: false, icon: undefined },
-        { label: 'Reservations', href: '/contact', isExternal: false, icon: undefined },
         { label: 'Contact', href: '/contact', isExternal: false, icon: undefined },
       ]
     },
