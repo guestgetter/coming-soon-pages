@@ -6,10 +6,10 @@ import {
   VStack,
   HStack,
   Text,
+  Image,
   useBreakpointValue,
 } from '@chakra-ui/react'
 import { MenuCategory } from '../data/menuData'
-import MenuImageCarousel from './MenuImageCarousel'
 
 interface AlternatingMenuSectionProps {
   category: MenuCategory
@@ -106,21 +106,53 @@ const AlternatingMenuSection: React.FC<AlternatingMenuSectionProps> = ({
         alignItems={{ base: 'start', md: 'center' }} // Center align on medium+ devices
         minH={{ base: 'auto', md: '100vh' }} // Ensure minimum height for centering
       >
-        {/* Image Carousel - Full width of its column, centered vertically */}
+        {/* Menu Image - Full width of its column, centered vertically */}
         <GridItem
           order={{ base: 1, md: isImageLeft ? 1 : 2 }}
           display="flex"
           justifyContent="center"
-          alignItems={{ base: 'center', md: 'center' }} // Center vertically on all devices
-          w="100%" // Full width of its grid column
-          minH={{ base: '300px', md: '100vh' }} // Ensure enough height for centering
+          alignItems={{ base: 'center', md: 'center' }}
+          w="100%"
+          minH={{ base: '300px', md: '90vh' }}
         >
-          <MenuImageCarousel
-            images={images}
-            autoPlayInterval={6000}
-            showNavigation={true}
-            showIndicators={true}
-          />
+          {images.length > 0 && (
+            <Box
+              position="relative"
+              w="100%"
+              h={{ base: '300px', md: '90vh' }}
+              borderRadius="20px"
+              overflow="hidden"
+              boxShadow="0 25px 50px rgba(0, 0, 0, 0.12)"
+              transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+              _hover={{
+                transform: 'translateY(-4px) scale(1.01)',
+                boxShadow: '0 35px 70px rgba(138, 84, 46, 0.25)',
+              }}
+            >
+              <Image
+                src={images[0].src}
+                alt={images[0].alt}
+                title={images[0].title}
+                w="100%"
+                h="100%"
+                objectFit="cover"
+                fallback={
+                  <Box
+                    w="100%"
+                    h="100%"
+                    bg="brand.cream"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Text color="brand.lightBrown" fontSize="md" fontFamily="heading">
+                      {images[0].title || images[0].alt}
+                    </Text>
+                  </Box>
+                }
+              />
+            </Box>
+          )}
         </GridItem>
 
         {/* Menu Items - Full width of its column */}
