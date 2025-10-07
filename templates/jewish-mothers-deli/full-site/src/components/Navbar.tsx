@@ -77,6 +77,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
     ? 'transparent'
     : 'linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)'
 
+  // Mobile-only sticky header height: keep large pre-scroll, shrink when scrolled
+  const mobileHeaderHeightPx = isScrolled ? '84px' : '108px'
+
   // Memoize nav items to prevent unnecessary re-renders
   const navItems = useMemo(() => [
     { name: 'Home', path: '/' },
@@ -206,7 +209,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         maxW="1400px"
         mx="auto"
         position="relative"
-        minH={{ base: '108px', md: (isScrolled ? '120px' : '180px'), lg: (isScrolled ? '160px' : '240px') }}
+        minH={{ base: mobileHeaderHeightPx, md: (isScrolled ? '120px' : '180px'), lg: (isScrolled ? '160px' : '240px') }}
         zIndex={2}
       >
         {/* Mobile Layout */}
@@ -220,7 +223,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 left="0px"
                 right="0px"
                 zIndex={9998}
-                h="108px"
+                h={mobileHeaderHeightPx}
                 bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
               >
                 {/* Subtle pattern overlay for consistency */}
@@ -416,7 +419,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
           <Box
             bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
             position="fixed"
-            top={isOpen ? "108px" : (shrinkLogo ? "92px" : "104px")}
+            top={mobileHeaderHeightPx}
             left="0"
             right="0"
             zIndex={9999}
@@ -442,7 +445,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               px="20px"
               align="center" 
               justify="flex-start" 
-              minH="calc(100vh - 108px)"
+              minH={`calc(100vh - ${mobileHeaderHeightPx})`}
               position="relative"
               zIndex="1"
             >
