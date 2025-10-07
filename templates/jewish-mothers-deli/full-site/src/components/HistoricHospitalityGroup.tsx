@@ -103,8 +103,9 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
             src={restaurant.image}
             alt={restaurant.name}
             width="100%"
-            height="360px"
+            h={{ base: '240px', md: '360px' }}
             objectFit="cover"
+            objectPosition="center top"
             transition="transform 0.6s ease"
             _hover={{ transform: 'scale(1.03)' }}
           />
@@ -174,7 +175,7 @@ const HistoricHospitalityGroup: React.FC = () => {
       
       {/* Hero Section */}
       <Container maxW="container.xl" position="relative" zIndex="2">
-        <Center minHeight="80vh" py="32">
+        <Center minH={{ base: '75vh', md: '80vh' }} pt={{ base: 80, md: 112 }} pb={{ base: 12, md: 16 }}>
           <MotionVStack
             spacing="8"
             textAlign="center"
