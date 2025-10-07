@@ -107,12 +107,13 @@ const OurStory: React.FC = () => {
               />
               
               <Image
-                src="/images/the-jewish-mothers-deli-sign-williamsburg-va.jpg"
-                alt="The Jewish Mother's Deli sign in Williamsburg, VA"
+                src="/images/jewish-mothers-deli-sign-williamsburg-virginia.jpg"
+                alt="The Jewish Mother's Deli sign in Williamsburg, Virginia"
                 w="100%"
-                h={{ base: '380px', md: '500px', lg: '620px' }}
-                objectFit="cover"
-                objectPosition="left center"
+                h="auto"
+                maxH={{ base: '450px', md: '600px', lg: '700px' }}
+                objectFit="contain"
+                objectPosition="center"
                 loading="lazy"
                 decoding="async"
                 fallback={
