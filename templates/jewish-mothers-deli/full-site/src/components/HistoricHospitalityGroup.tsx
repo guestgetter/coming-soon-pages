@@ -10,6 +10,7 @@ import {
   Button,
   Link,
   Center,
+  Flex,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
@@ -97,6 +98,7 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
         borderColor="rgba(138, 84, 46, 0.08)"
         _hover={{ transform: 'translateY(-6px)', boxShadow: '0 28px 80px rgba(111, 62, 19, 0.16)' }}
       >
+<<<<<<< HEAD
         {/* Image */}
         <Box position="relative" overflow="hidden">
           {/* Blurred background to avoid letterboxing look while keeping full image visible */}
@@ -131,41 +133,61 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
 >>>>>>> e344631 (style(historic): switch card images to blurred-bg + contain for no-crop layout)
           />
         </Box>
+=======
+        <Flex
+          direction={{ base: 'column', md: (index % 2 === 0) ? 'row' : 'row-reverse' }}
+          align="stretch"
+        >
+          {/* Image side */}
+          <Box w={{ base: '100%', md: '50%' }} position="relative" overflow="hidden" minH={{ base: '240px', md: '360px' }}>
+            <Image
+              src={restaurant.image}
+              alt={restaurant.name}
+              w="100%"
+              h="100%"
+              objectFit="cover"
+              objectPosition="center"
+              transition="transform 0.6s ease"
+              _groupHover={{ transform: 'scale(1.03)' }}
+            />
+          </Box>
+>>>>>>> a5583e8 (feat(historic): alternating two-column cards (image/content) for consistent layout)
 
-        {/* Content */}
-        <VStack spacing={4} align="stretch" p={{ base: 6, md: 8 }}>
-          <Heading size="lg" fontFamily="heading" color="brand.darkBrown">
-            {restaurant.name}
-          </Heading>
-          <Text variant="tagline">"{restaurant.tagline}"</Text>
+          {/* Content side */}
+          <VStack w={{ base: '100%', md: '50%' }} spacing={4} align="stretch" p={{ base: 6, md: 8 }}>
+            <Heading size="lg" fontFamily="heading" color="brand.darkBrown">
+              {restaurant.name}
+            </Heading>
+            <Text variant="tagline">"{restaurant.tagline}"</Text>
 
-          <HStack spacing={2}>
-            <Text fontSize="sm" color="brand.lightBrown">
-              {restaurant.location}
+            <HStack spacing={2}>
+              <Text fontSize="sm" color="brand.lightBrown">
+                {restaurant.location}
+              </Text>
+              <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
+                • {restaurant.cuisine}
+              </Text>
+            </HStack>
+
+            <Text variant="description" fontSize="md" lineHeight="1.7">
+              {restaurant.description}
             </Text>
-            <Text fontSize="sm" color="brand.mediumBrown" fontWeight="500">
-              • {restaurant.cuisine}
-            </Text>
-          </HStack>
 
-          <Text variant="description" fontSize="md" lineHeight="1.7">
-            {restaurant.description}
-          </Text>
-
-          <HStack justify="flex-start" pt={2}>
-            <Button
-              as={Link}
-              href={restaurant.website}
-              isExternal
-              variant="primary"
-              size="lg"
-              px="8"
-              _hover={{ textDecoration: 'none' }}
-            >
-              Visit Website
-            </Button>
-          </HStack>
-        </VStack>
+            <HStack justify="flex-start" pt={2}>
+              <Button
+                as={Link}
+                href={restaurant.website}
+                isExternal
+                variant="primary"
+                size="lg"
+                px="8"
+                _hover={{ textDecoration: 'none' }}
+              >
+                Visit Website
+              </Button>
+            </HStack>
+          </VStack>
+        </Flex>
       </Box>
     </MotionBox>
   );
