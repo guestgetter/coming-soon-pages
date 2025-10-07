@@ -16,6 +16,11 @@ export const menuImageCollections: MenuImageCollection[] = [
     categoryId: 'bagels-schmears',
     images: [
       {
+        src: '/menu_images/best-bagels-williamsburg-virginia_optimized.jpg',
+        alt: 'Fresh bagels at Jewish Mother\'s Deli in Williamsburg, Virginia',
+        title: 'Fresh Daily Bagels'
+      },
+      {
         src: '/menu_images/delicious-food-prepared-jewish-hanukkah-celebration_optimized.jpg',
         alt: 'Fresh bagel with lox and cream cheese',
         title: 'Classic Lox & Bagel'
