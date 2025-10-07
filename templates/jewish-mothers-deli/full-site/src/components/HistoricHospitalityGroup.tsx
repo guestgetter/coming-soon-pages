@@ -98,42 +98,6 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
         borderColor="rgba(138, 84, 46, 0.08)"
         _hover={{ transform: 'translateY(-6px)', boxShadow: '0 28px 80px rgba(111, 62, 19, 0.16)' }}
       >
-<<<<<<< HEAD
-        {/* Image */}
-        <Box position="relative" overflow="hidden">
-          {/* Blurred background to avoid letterboxing look while keeping full image visible */}
-          <Box
-            position="absolute"
-            top={0}
-            right={0}
-            bottom={0}
-            left={0}
-            bgImage={`url(${restaurant.image})`}
-            bgSize="cover"
-            bgPos="center"
-            filter="blur(16px)"
-            transform="scale(1.1)"
-            opacity={0.35}
-          />
-          {/* Foreground image scales to fit without cropping */}
-          <Image
-            src={restaurant.image}
-            alt={restaurant.name}
-            width="100%"
-            h={{ base: '240px', md: '360px' }}
-<<<<<<< HEAD
-            objectFit="cover"
-            objectPosition="center top"
-            transition="transform 0.6s ease"
-            _hover={{ transform: 'scale(1.03)' }}
-=======
-            objectFit="contain"
-            position="relative"
-            zIndex={1}
->>>>>>> e344631 (style(historic): switch card images to blurred-bg + contain for no-crop layout)
-          />
-        </Box>
-=======
         <Flex
           direction={{ base: 'column', md: (index % 2 === 0) ? 'row' : 'row-reverse' }}
           align="stretch"
@@ -147,11 +111,11 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
               h="100%"
               objectFit="cover"
               objectPosition="center"
+              loading="lazy"
               transition="transform 0.6s ease"
               _groupHover={{ transform: 'scale(1.03)' }}
             />
           </Box>
->>>>>>> a5583e8 (feat(historic): alternating two-column cards (image/content) for consistent layout)
 
           {/* Content side */}
           <VStack w={{ base: '100%', md: '50%' }} spacing={4} align="stretch" p={{ base: 6, md: 8 }}>
