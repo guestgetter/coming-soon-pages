@@ -457,20 +457,12 @@ const AboutPage: React.FC = () => {
           <VStack spacing={12}>
             <VStack spacing={6} textAlign="center">
               <Text
-                fontFamily="heading"
-                fontSize={{ base: '2rem', md: '2.5rem', lg: '3rem' }}
+                fontFamily="'Dancing Script', cursive"
+                fontSize={{ base: '2.5rem', md: '3rem', lg: '3.5rem' }}
                 color="brand.darkBrown"
                 fontWeight={600}
               >
-                Started from Bottom But Now We Are Here
-              </Text>
-              <Text
-                fontSize={{ base: '1.1rem', lg: '1.3rem' }}
-                color="brand.lightBrown"
-                maxW="600px"
-                lineHeight={1.6}
-              >
-                Our journey from humble beginnings to becoming a beloved culinary destination
+                A Modern Jewish Kitchen Deli in Williamsburg, Virginia
               </Text>
             </VStack>
 
