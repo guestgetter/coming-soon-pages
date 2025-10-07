@@ -70,6 +70,11 @@ export const menuImageCollections: MenuImageCollection[] = [
     categoryId: 'deli-sandwiches',
     images: [
       {
+        src: '/menu_images/williamsburg-deli-sandwich_optimized.jpg',
+        alt: 'Classic deli sandwich at Jewish Mother\'s Deli in Williamsburg',
+        title: 'Signature Deli Sandwich'
+      },
+      {
         src: '/menu_images/sandwich-with-salami-lettuce-tomato-arugula_optimized.jpg',
         alt: 'Classic pastrami on rye sandwich',
         title: 'Hot Pastrami on Rye'
