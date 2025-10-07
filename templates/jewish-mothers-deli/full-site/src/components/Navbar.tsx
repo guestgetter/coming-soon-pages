@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import {
   Box,
   Button,
@@ -6,9 +6,9 @@ import {
   HStack,
   VStack,
   useDisclosure,
+  Collapse,
   Flex,
   IconButton,
-  Portal,
 } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
@@ -24,10 +24,6 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
   const location = useLocation()
   const isMobile = useBreakpointValue({ base: true, md: false })
   const [internalIsScrolled, setInternalIsScrolled] = useState(false)
-  const [shouldRenderMenu, setShouldRenderMenu] = useState(false)
-  const overlayRef = useRef<HTMLDivElement | null>(null)
-  const firstNavButtonRef = useRef<HTMLButtonElement | null>(null)
-  const menuButtonRef = useRef<HTMLButtonElement | null>(null)
 
   // Optimized scroll handler with throttling instead of debouncing for better performance
   const handleScroll = useCallback(() => {
@@ -57,26 +53,15 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
     return () => window.removeEventListener('scroll', throttledScrollHandler)
   }, [throttledScrollHandler])
 
-  // Manage mounting for smooth exit animation
-  useEffect(() => {
-    if (isOpen) {
-      setShouldRenderMenu(true)
-    } else {
-      const timeoutId = window.setTimeout(() => setShouldRenderMenu(false), 200)
-      return () => window.clearTimeout(timeoutId)
-    }
-  }, [isOpen])
-
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (!(isMobile && isOpen)) return
-      const target = event.target as Element
-      // If click is inside the overlay menu, do nothing
-      if (overlayRef.current && overlayRef.current.contains(target)) return
-      const navbar = document.querySelector('[data-navbar]')
-      if (navbar && !navbar.contains(target)) {
-        onToggle()
+      if (isMobile && isOpen) {
+        const target = event.target as Element
+        const navbar = document.querySelector('[data-navbar]')
+        if (navbar && !navbar.contains(target)) {
+          onToggle()
+        }
       }
     }
 
@@ -84,62 +69,13 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [isMobile, isOpen, onToggle])
 
-  // Body scroll lock when mobile menu is open
-  useEffect(() => {
-    if (!isMobile) return
-    const body = document.body
-    const html = document.documentElement
-    const previousBodyOverflow = body.style.overflow
-    const previousHtmlOverflow = html.style.overflow
-    if (isOpen) {
-      body.style.overflow = 'hidden'
-      html.style.overflow = 'hidden'
-    }
-    return () => {
-      body.style.overflow = previousBodyOverflow
-      html.style.overflow = previousHtmlOverflow
-    }
-  }, [isMobile, isOpen])
-
-  // Minimal focus trap and ESC to close when menu is open
-  useEffect(() => {
-    if (!isOpen) return
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onToggle()
-        // Return focus to the menu button
-        window.setTimeout(() => menuButtonRef.current?.focus(), 0)
-        return
-      }
-      if (event.key === 'Tab' && overlayRef.current) {
-        const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex="0"]'
-        )
-        if (!focusable.length) return
-        const focusables = Array.from(focusable)
-        const first = focusables[0]
-        const last = focusables[focusables.length - 1]
-        if (event.shiftKey) {
-          if (document.activeElement === first) {
-            event.preventDefault()
-            last.focus()
-          }
-        } else {
-          if (document.activeElement === last) {
-            event.preventDefault()
-            first.focus()
-          }
-        }
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    // Move focus to first nav button when opening
-    window.setTimeout(() => firstNavButtonRef.current?.focus(), 0)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, onToggle])
-
   // Use internal scroll detection if no prop is provided, otherwise use prop
   const isScrolled = propIsScrolled !== undefined ? propIsScrolled : internalIsScrolled
+  const isHome = location.pathname === '/'
+  // Transparent on homepage before scroll; opaque elsewhere or when menu is open
+  const navBackground = (isHome && !isScrolled && !isOpen)
+    ? 'transparent'
+    : 'linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)'
 
   // Memoize nav items to prevent unnecessary re-renders
   const navItems = useMemo(() => [
@@ -169,10 +105,6 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         })
       }, 100)
     }
-    // Close the mobile menu on navigation
-    if (isMobile && isOpen) {
-      onToggle()
-    }
   }, [location.pathname])
 
   // Memoize the logo image to prevent unnecessary re-renders
@@ -186,14 +118,18 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
       baseScale = 0.8;
     }
     
-    // Mobile logo sizing
+    // Mobile logo sizing (ensure it never gets clipped in sticky header)
     if (isMobile) {
-      // Slightly smaller on mobile to avoid overflow/clipping
-      maxHeight = '150px';
+      // ~20% reduction on sticky height
+      maxHeight = isScrolled ? '78px' : '120px';
       if (shrinkLogo) {
-        maxHeight = '120px';
+        maxHeight = isScrolled ? '78px' : '100px';
         baseScale = 0.8;
       }
+    } else {
+      // Desktop: shrink logo when sticky so header feels compact
+      maxHeight = isScrolled ? '140px' : '220px';
+      baseScale = isScrolled ? 0.9 : 1;
     }
     
     return (
@@ -241,25 +177,20 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
       right={0}
       zIndex={1500}
       transition="all 0.3s ease"
-      bg="transparent"
+      bg={navBackground}
       willChange="transform"
       transform="translateZ(0)"
     >
-      {/* Top yellow accent strip */}
-      <Box
-        h="4px"
-        bg="yellow.400"
-        w="100%"
-      />
+      {/* Top accent strip removed per request */}
 
       {/* Sticky background - use brand beige */}
-      {isScrolled && !isOpen && (
+      {isMobile && isScrolled && !isOpen && (
         <Box
           position="absolute"
           top={0}
           left={0}
           right={0}
-          h={{ base: shrinkLogo ? "75%" : "135%", md: "40%" }}
+          h="100%"
           bg="rgba(251, 231, 204, 0.95)"
           backdropFilter="blur(8px)"
           borderBottom="1px solid rgba(138, 84, 46, 0.15)"
@@ -270,13 +201,12 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
       )}
 
       <Box
-        py={{ base: 4, md: 8, lg: 12 }}
+        py={{ base: 2, md: (isScrolled ? 4 : 8), lg: (isScrolled ? 6 : 12) }}
         px={{ base: 4, md: 8, lg: 12 }}
         maxW="1400px"
         mx="auto"
         position="relative"
-        // Provide enough vertical space so the logo never clips
-        minH={{ base: '160px', md: '180px', lg: '240px' }}
+        minH={{ base: '108px', md: (isScrolled ? '120px' : '180px'), lg: (isScrolled ? '160px' : '240px') }}
         zIndex={2}
       >
         {/* Mobile Layout */}
@@ -290,7 +220,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 left="0px"
                 right="0px"
                 zIndex={9998}
-                h="140px"
+                h="108px"
                 bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
               >
                 {/* Subtle pattern overlay for consistency */}
@@ -305,12 +235,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                   backgroundSize="60px 60px"
                   pointerEvents="none"
                 />
-                {/* Centered logo in mobile menu header */}
-                <Box position="relative" h="100%" display="flex" alignItems="center" justifyContent="center">
-                  <Link to="/" onClick={() => handleNavigation('/')}>
-                    {logoImage}
-                  </Link>
-                </Box>
+                {/* Keep header logo only when menu is open for a cleaner look */}
               </Box>
             )}
             
@@ -318,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
             {isOpen && (
               <Box
                 position="absolute"
-                top="56px"
+                top="50%"
                 left={4}
                 zIndex={10002}
                 transform="translateY(-50%)"
@@ -329,9 +254,8 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
             )}
             
             {/* Hamburger Menu */}
-            <Box position="absolute" top={isOpen ? "56px" : (shrinkLogo ? "2.5" : "56px")} left={4} zIndex={10003} transform={isOpen ? "translateY(-50%)" : (shrinkLogo ? "none" : "translateY(-50%)")} transition="all 0.3s ease">
+            <Box position="absolute" top="50%" left={4} zIndex={10003} transform="translateY(-50%)" transition="all 0.3s ease">
               <IconButton
-                ref={menuButtonRef}
                 aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
                 icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
                 onClick={onToggle}
@@ -358,13 +282,12 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               />
             </Box>
 
-            {/* Mobile Logo - always visible when menu is closed (also when shrinkLogo) */}
-            {!isOpen && (
+            {/* Mobile Logo (always visible; avoid duplicate in menu panel) */}
+            {!shrinkLogo && (
               <Box 
                 position="absolute" 
                 left="50%" 
-                // Center the logo better on mobile to prevent bottom clipping
-                top={shrinkLogo ? '55%' : '58%'}
+                top="50%"
                 transform="translate(-50%, -50%)"
                 zIndex={5}
                 transition="all 0.3s ease"
@@ -420,10 +343,10 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               top={isOpen ? "85%" : (shrinkLogo ? "0%" : "85%")}
               transform="translate(-50%, -50%)"
               zIndex={4}
-              bg={isScrolled ? 'rgba(251, 231, 204, 0.95)' : 'transparent'}
+              bg="transparent"
               borderRadius="50%"
-              w={isOpen ? "135px" : (shrinkLogo ? "70px" : "135px")}
-              h={isOpen ? "135px" : (shrinkLogo ? "60px" : "135px")}
+              w={isOpen ? "135px" : (shrinkLogo ? "70px" : (isScrolled ? "100px" : "135px"))}
+              h={isOpen ? "135px" : (shrinkLogo ? "60px" : (isScrolled ? "100px" : "135px"))}
               transition="all 0.3s ease"
             />
             
@@ -487,97 +410,61 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
 
       </Box>
 
-      {/* Mobile Navigation - full-screen overlay using Portal for clean stacking and transforms */}
-      {isMobile && shouldRenderMenu && (
-        <Portal>
+      {/* Mobile Navigation */}
+      {isMobile && (
+        <Collapse in={isOpen} animateOpacity>
           <Box
-            ref={overlayRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation"
-            position="fixed"
-            top={0}
-            left={0}
-            right={0}
-            bottom={0}
-            zIndex={10000}
             bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
-            sx={{
-              '@keyframes menuSlideIn': {
-                from: { opacity: 0, transform: 'translateY(-8px) translateZ(0)' },
-                to: { opacity: 1, transform: 'translateY(0) translateZ(0)' },
-              },
-              '@keyframes menuSlideOut': {
-                from: { opacity: 1, transform: 'translateY(0) translateZ(0)' },
-                to: { opacity: 0, transform: 'translateY(-8px) translateZ(0)' },
-              },
-              animation: `${isOpen ? 'menuSlideIn' : 'menuSlideOut'} 200ms cubic-bezier(0.4, 0, 0.2, 1)`,
-              willChange: 'transform, opacity',
-            }}
+            position="fixed"
+            top={isOpen ? "108px" : (shrinkLogo ? "92px" : "104px")}
+            left="0"
+            right="0"
+            zIndex={9999}
+            minH="100vh"
           >
             {/* Background Pattern */}
             <Box
               position="absolute"
-              inset={0}
+              top="0"
+              left="0"
+              right="0"
+              bottom="0"
               opacity="0.03"
               backgroundImage="radial-gradient(circle at 25% 25%, #8a542e 2px, transparent 2px), radial-gradient(circle at 75% 75%, #6f3e13 2px, transparent 2px)"
               backgroundSize="60px 60px"
               pointerEvents="none"
             />
-
-            {/* Overlay header with centered logo and close button */}
-            <Box position="relative" h="140px" zIndex={1}>
-              <Box
-                position="absolute"
-                insetX={0}
-                top={0}
-                h="140px"
-                bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
-              />
-              <Box position="absolute" inset={0} display="flex" alignItems="center" justifyContent="center">
-                <Link to="/" onClick={() => handleNavigation('/')}> 
-                  {logoImage}
-                </Link>
-              </Box>
-              <IconButton
-                aria-label="Close navigation menu"
-                icon={<CloseIcon />}
-                onClick={onToggle}
-                variant="ghost"
-                color={'brand.darkBrown'}
-                bg="transparent"
-                position="absolute"
-                top="56px"
-                left={4}
-                zIndex={2}
-                border={'none'}
-                size="lg"
-                fontSize="24px"
-                transition="all 0.2s ease"
-                borderRadius="md"
-                _active={{ transform: 'scale(0.95)' }}
-              />
-            </Box>
-
-            {/* Menu body */}
+            
             <VStack 
-              spacing={8}
-              pt="10px"
+              spacing={8} 
+              pt="40px" 
               pb="40px"
               px="20px"
-              align="center"
-              justify="flex-start"
-              minH="calc(100vh - 140px)"
+              align="center" 
+              justify="flex-start" 
+              minH="calc(100vh - 108px)"
               position="relative"
-              zIndex={1}
+              zIndex="1"
             >
+              {/* Centered Logo in mobile menu */}
+              <Box mb={4}>
+                <img
+                  src="/JMD_full_logo.png"
+                  alt="Jewish Mother's Deli Logo"
+                  style={{
+                    maxHeight: '120px',
+                    height: 'auto',
+                    width: 'auto',
+                    objectFit: 'contain',
+                  }}
+                />
+              </Box>
               {/* Navigation Links */}
               <VStack spacing={4} mb="8">
-                {navItems.map((item, index) => (
+                {navItems.map((item) => (
                   <Box key={item.name}>
                     <Link to={item.path} onClick={() => handleNavigation(item.path)}>
                       <Button
-                        ref={index === 0 ? firstNavButtonRef : undefined}
                         variant="ghost"
                         color={isActivePage(item.path) ? 'brand.mediumBrown' : 'brand.darkBrown'}
                         _hover={{
@@ -595,7 +482,9 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                         textTransform="uppercase"
                         letterSpacing="0.5px"
                         transition="all 0.3s ease"
-                        _active={{ transform: 'scale(0.95)' }}
+                        _active={{
+                          transform: "scale(0.95)",
+                        }}
                       >
                         {item.name}
                       </Button>
@@ -616,7 +505,8 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                   letterSpacing="0.8px"
                   py="6"
                   onClick={() => {
-                    window.open('tel:+17575551234', '_self')
+                    // Add order functionality here
+                    window.open('tel:+17575551234', '_self');
                   }}
                 >
                   ORDER NOW
@@ -633,9 +523,12 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                   py="6"
                   borderColor="brand.mediumBrown"
                   color="brand.mediumBrown"
-                  _hover={{ bg: 'brand.mediumBrown', color: 'white' }}
+                  _hover={{
+                    bg: 'brand.mediumBrown',
+                    color: 'white',
+                  }}
                   onClick={() => {
-                    window.open('https://maps.google.com/?q=Jewish+Mother\'s+Deli+Williamsburg+VA', '_blank')
+                    window.open('https://maps.google.com/?q=Jewish+Mother\'s+Deli+Williamsburg+VA', '_blank');
                   }}
                 >
                   GET DIRECTIONS
@@ -650,22 +543,29 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                   fontSize="1.2rem"
                   fontWeight="600"
                   color="brand.darkBrown"
-                  _hover={{ color: 'brand.mediumBrown' }}
+                  _hover={{
+                    color: 'brand.mediumBrown',
+                  }}
                   onClick={() => {
-                    window.open('tel:+17575551234', '_self')
+                    window.open('tel:+17575551234', '_self');
                   }}
                 >
                   <span style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1.3rem' }}>
                     A Modern Jewish Kitchen Deli
                   </span>
                 </Button>
-                <Box fontSize="sm" color="brand.lightBrown" textAlign="center" fontStyle="italic">
+                <Box
+                  fontSize="sm"
+                  color="brand.lightBrown"
+                  textAlign="center"
+                  fontStyle="italic"
+                >
                   Tap to call
                 </Box>
               </VStack>
             </VStack>
           </Box>
-        </Portal>
+        </Collapse>
       )}
     </Box>
   )
