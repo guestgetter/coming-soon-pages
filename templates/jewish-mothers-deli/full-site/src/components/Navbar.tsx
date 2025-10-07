@@ -120,10 +120,10 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
     
     // Mobile logo sizing (ensure it never gets clipped in sticky header)
     if (isMobile) {
-      // ~20% reduction on sticky height
-      maxHeight = isScrolled ? '78px' : '120px';
+      // Reduced logo size for compact mobile header
+      maxHeight = isScrolled ? '50px' : '120px';
       if (shrinkLogo) {
-        maxHeight = isScrolled ? '78px' : '100px';
+        maxHeight = isScrolled ? '50px' : '100px';
         baseScale = 0.8;
       }
     } else {
@@ -206,7 +206,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
         maxW="1400px"
         mx="auto"
         position="relative"
-        minH={{ base: '108px', md: (isScrolled ? '120px' : '180px'), lg: (isScrolled ? '160px' : '240px') }}
+        minH={{ base: '70px', md: (isScrolled ? '120px' : '180px'), lg: (isScrolled ? '160px' : '240px') }}
         zIndex={2}
       >
         {/* Mobile Layout */}
@@ -220,7 +220,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
                 left="0px"
                 right="0px"
                 zIndex={9998}
-                h="108px"
+                h="70px"
                 bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
               >
                 {/* Subtle pattern overlay for consistency */}
@@ -416,7 +416,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
           <Box
             bg="linear-gradient(135deg, #fbe7cc 0%, #f5ddb8 50%, #ead5a3 100%)"
             position="fixed"
-            top={isOpen ? "108px" : (shrinkLogo ? "92px" : "104px")}
+            top={isOpen ? "70px" : (shrinkLogo ? "92px" : "104px")}
             left="0"
             right="0"
             zIndex={9999}
@@ -442,7 +442,7 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
               px="20px"
               align="center" 
               justify="flex-start" 
-              minH="calc(100vh - 108px)"
+              minH="calc(100vh - 70px)"
               position="relative"
               zIndex="1"
             >
