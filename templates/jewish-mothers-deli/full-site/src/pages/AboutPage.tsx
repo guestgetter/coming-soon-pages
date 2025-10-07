@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Box,
   Container,
-  Flex,
   VStack,
   Text,
 } from '@chakra-ui/react'
