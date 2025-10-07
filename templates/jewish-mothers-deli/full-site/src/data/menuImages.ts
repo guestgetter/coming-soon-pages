@@ -43,6 +43,11 @@ export const menuImageCollections: MenuImageCollection[] = [
     categoryId: 'bagel-sandwiches',
     images: [
       {
+        src: '/menu_images/bagel-sandwiches-williamsburg_optimized.jpg',
+        alt: 'Bagel sandwiches at Jewish Mother\'s Deli in Williamsburg',
+        title: 'Signature Bagel Sandwiches'
+      },
+      {
         src: '/menu_images/big-portion-baguette-sandwich-full-mixed-sausages-vegetables_optimized.jpg',
         alt: 'The Mensch - pastrami and egg on everything bagel',
         title: 'The Mensch'
