@@ -580,9 +580,30 @@ const AboutPage: React.FC = () => {
             </VStack>
 
             {/* Optimized Sliding Cards Container - Infinite Scroll Effect */}
-            <Box w="100%" overflow="hidden">
-
-
+            <Box w="100%" overflow="hidden" position="relative">
+              {/* Left fade gradient */}
+              <Box
+                position="absolute"
+                left={0}
+                top={0}
+                bottom={0}
+                w={{ base: '60px', md: '120px' }}
+                bgGradient="linear(to-r, brand.cream, transparent)"
+                zIndex={10}
+                pointerEvents="none"
+              />
+              
+              {/* Right fade gradient */}
+              <Box
+                position="absolute"
+                right={0}
+                top={0}
+                bottom={0}
+                w={{ base: '60px', md: '120px' }}
+                bgGradient="linear(to-l, brand.cream, transparent)"
+                zIndex={10}
+                pointerEvents="none"
+              />
               
               <Box
                 display="flex"
