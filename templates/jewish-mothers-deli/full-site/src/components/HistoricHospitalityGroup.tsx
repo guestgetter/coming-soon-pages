@@ -99,15 +99,36 @@ const RestaurantCard: React.FC<{ restaurant: Restaurant; index: number }> = ({ r
       >
         {/* Image */}
         <Box position="relative" overflow="hidden">
+          {/* Blurred background to avoid letterboxing look while keeping full image visible */}
+          <Box
+            position="absolute"
+            top={0}
+            right={0}
+            bottom={0}
+            left={0}
+            bgImage={`url(${restaurant.image})`}
+            bgSize="cover"
+            bgPos="center"
+            filter="blur(16px)"
+            transform="scale(1.1)"
+            opacity={0.35}
+          />
+          {/* Foreground image scales to fit without cropping */}
           <Image
             src={restaurant.image}
             alt={restaurant.name}
             width="100%"
             h={{ base: '240px', md: '360px' }}
+<<<<<<< HEAD
             objectFit="cover"
             objectPosition="center top"
             transition="transform 0.6s ease"
             _hover={{ transform: 'scale(1.03)' }}
+=======
+            objectFit="contain"
+            position="relative"
+            zIndex={1}
+>>>>>>> e344631 (style(historic): switch card images to blurred-bg + contain for no-crop layout)
           />
         </Box>
 
