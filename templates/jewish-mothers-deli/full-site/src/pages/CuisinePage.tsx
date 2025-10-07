@@ -33,8 +33,9 @@ const CuisinePage: React.FC = () => {
     // Scroll to specific category
     const categoryElement = document.getElementById(`category-${categoryId}`)
     if (categoryElement) {
-      // Calculate offset to account for sticky navigation height + extra space
-      const navHeight = 200 // Increased offset for sticky nav + padding + extra space
+      // Calculate offset based on actual navbar height so it works on desktop and mobile
+      const navbarEl = document.querySelector('[data-navbar]') as HTMLElement | null
+      const navHeight = (navbarEl?.offsetHeight ?? 120) + 20
       const elementPosition = categoryElement.offsetTop
       const offsetPosition = elementPosition - navHeight
       
@@ -293,9 +294,9 @@ const CuisinePage: React.FC = () => {
                   key={category.id}
                   as="a"
                   href={`#category-${category.id}`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    scrollToCategory(category.id)
+                  // Allow default anchor jump, then correct the offset so it works reliably on desktop
+                  onClick={() => {
+                    setTimeout(() => scrollToCategory(category.id), 0)
                   }}
                   variant="solid"
                   size={{ base: 'sm', md: 'md' }}
