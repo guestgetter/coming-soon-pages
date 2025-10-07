@@ -6,7 +6,6 @@ import LoadingSpinner from './components/LoadingSpinner'
 import PerformanceMonitor from './components/PerformanceMonitor'
 import PerformanceOptimizer from './components/PerformanceOptimizer'
 import ScrollToTop from './components/ScrollToTop'
-import FloatingActionButton from './components/FloatingActionButton'
 
 // Lazy load pages for better performance
 const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'))
@@ -35,9 +34,6 @@ function App() {
             <Route path="/blog/:slug" element={<BlogPostPage />} />
           </Routes>
         </Suspense>
-        
-        {/* GLOBAL FAB - Appears on ALL pages */}
-        <FloatingActionButton />
       </Router>
     </ChakraProvider>
   )

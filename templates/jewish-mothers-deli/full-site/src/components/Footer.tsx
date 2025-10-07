@@ -401,59 +401,6 @@ const Footer: React.FC = () => {
               </Box>
             </Link>
 
-            {/* Twitter/X Icon (placeholder) */}
-            <Link
-              href="#"
-              color="rgba(255, 255, 255, 0.7)"
-              fontSize="1.2rem"
-              p={5}
-              borderRadius="50%"
-              bg="rgba(255, 255, 255, 0.1)"
-              aria-label="Visit our X (Twitter) page"
-              _hover={{
-                bg: 'rgba(255, 255, 255, 0.2)',
-                color: 'brand.cream',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              <Box
-                w="40px"
-                h="40px"
-                position="relative"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {/* Clean X icon */}
-                <Box
-                  w="18px"
-                  h="18px"
-                  position="relative"
-                >
-                  {/* X using clean lines */}
-                  <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    w="2px"
-                    h="18px"
-                    bg="white"
-                    borderRadius="1px"
-                    transform="translate(-50%, -50%) rotate(45deg)"
-                  />
-                  <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    w="2px"
-                    h="18px"
-                    bg="white"
-                    borderRadius="1px"
-                    transform="translate(-50%, -50%) rotate(-45deg)"
-                  />
-                </Box>
-              </Box>
-            </Link>
           </HStack>
         </Box>
 
