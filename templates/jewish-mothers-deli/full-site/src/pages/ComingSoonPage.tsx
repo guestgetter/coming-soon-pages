@@ -19,6 +19,7 @@ import BackgroundVideo from '../components/BackgroundVideo'
 import OurStory from '../components/OurStory'
 import CateringForm from '../components/ReservationsForm'
 import Navbar from '../components/Navbar'
+import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 const ComingSoonPage: React.FC = () => {
@@ -79,8 +80,12 @@ const ComingSoonPage: React.FC = () => {
 
   return (
     <Box position="relative">
-      {/* Navigation */}
-      <Navbar isScrolled={isScrolled} hideLogo={shouldHideLogo} />
+      {/* Preview flag for new header */}
+      {import.meta.env.VITE_USE_NEW_HEADER === 'true' ? (
+        <Header />
+      ) : (
+        <Navbar isScrolled={isScrolled} hideLogo={shouldHideLogo} />
+      )}
       
       {/* Background Patterns - following todo-plan.md texture requirements */}
       <BackgroundPatterns />
@@ -104,6 +109,8 @@ const ComingSoonPage: React.FC = () => {
         }}
       />
 
+      {/* Sentinel for sticky detection */}
+      <Box id="hero-sentinel" position="absolute" top={0} left={0} right={0} h="1px" />
       {/* 1. HERO SECTION - following todo-plan.md specifications */}
       <Box id="hero" position="relative" h={{ base: "100vh", md: "100vh", lg: "100vh" }} zIndex={10} pt={{ base: "60px", sm: "70px", md: "140px", lg: "120px" }} overflow="hidden">
         {/* Gradient Background */}
@@ -126,7 +133,18 @@ const ComingSoonPage: React.FC = () => {
           right={0}
           bottom={0}
           zIndex="-1"
-          bg="linear-gradient(135deg, rgba(251, 231, 204, 0.84) 0%, rgba(245, 221, 184, 0.84) 50%, rgba(234, 213, 163, 0.84) 100%)"
+          bg="linear-gradient(180deg, rgba(251,231,204,0) 0%, rgba(251,231,204,0.5) 20%, rgba(245,221,184,0.7) 50%, rgba(234,213,163,0.84) 100%)"
+        />
+        {/* Bottom fade to soften transition into next section */}
+        <Box
+          position="absolute"
+          left={0}
+          right={0}
+          bottom={0}
+          h={{ base: '140px', md: '180px' }}
+          pointerEvents="none"
+          zIndex={0}
+          bg="linear-gradient(180deg, rgba(251,231,204,0) 0%, rgba(251,231,204,0.8) 60%, rgba(251,231,204,1) 100%)"
         />
         <Container
           maxW="1400px"
