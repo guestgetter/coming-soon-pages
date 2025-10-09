@@ -245,13 +245,6 @@ const Navbar: React.FC<NavbarProps> = ({ isScrolled: propIsScrolled, shrinkLogo 
       willChange="transform"
       transform="translateZ(0)"
     >
-      {/* Top yellow accent strip */}
-      <Box
-        h="4px"
-        bg="yellow.400"
-        w="100%"
-      />
-
       {/* Sticky background - use brand beige */}
       {isScrolled && !isOpen && (
         <Box
